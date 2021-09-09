@@ -310,7 +310,7 @@
         "name": "Visualizations",
         "tab": "ea9b6de0.2693d",
         "order": 4,
-        "disp": true,
+        "disp": false,
         "width": "12",
         "collapse": false
     },
@@ -1053,7 +1053,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Supply Air Temp",
-        "func": "var p = msg.payload\nvar q = 2.4; //Air Flow, assumed to be constant\nvar Ta_s = flow.get(\"Ta_s\") || 28;\nvar Ts = flow.get(\"Ts\") || 2\nvar Ta_r = flow.get(\"Ta_r\") || 28\nvar rho = 1.225\nvar V = 80  // m3, volume of ahu \nvar M = V*rho  // Mass of air volumne\nvar c = 1000  // air heat storage capacity\nvar C = M*c  // Thermal Capacity of Coil\n\nvar dot_T = (q*rho*c*(Ta_r-Ta_s)-p)/C\n\nvar T = Ta_s+dot_T*Ts\n\nflow.set(\"Ta_s\",T)\nmsg.Ta_s = T\nmsg.payload = parseFloat(T).toFixed(2);\nmsg.topic = \"air\"\n\nreturn msg;",
+        "func": "var p = msg.payload\nvar q = 2.5; //Air Flow, assumed to be constant\n//var q = 2;\nvar O = flow.get('occupancy')\n//var q = 3-((O)/100)*1; \nflow.set('q_air',q)\nvar Ta_s = flow.get(\"Ta_s\") || 28;\nvar Ts = flow.get(\"Ts\") || 2\nvar Ta_r = flow.get(\"Ta_r\") || 28\nvar rho = 1.225\nvar V = 80  // m3, volume of ahu \nvar M = V*rho  // Mass of air volumne\nvar c = 1000  // air heat storage capacity\nvar C = M*c  // Thermal Capacity of Coil\n\nvar dot_T = (q*rho*c*(Ta_r-Ta_s)-p)/C\n\nvar T = Ta_s+dot_T*Ts\n\nflow.set(\"Ta_s\",T)\nmsg.Ta_s = T\nmsg.payload = parseFloat(T).toFixed(2);\nmsg.topic = \"air\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3138,7 +3138,7 @@
         "height": "6",
         "label": "Flow",
         "chartType": "line",
-        "legend": "false",
+        "legend": "true",
         "xformat": "HH:mm:ss",
         "interpolate": "linear",
         "nodata": "",
@@ -3191,7 +3191,7 @@
         "z": "8e025641.d38868",
         "name": "Head Chart",
         "group": "e9d68c7e.c2fed",
-        "order": 6,
+        "order": 7,
         "width": "6",
         "height": "6",
         "label": "Head Chart",
@@ -4674,7 +4674,8 @@
         "name": "Flow",
         "links": [
             "e020e671.030c08",
-            "d014a8c5.f34998"
+            "d014a8c5.f34998",
+            "e19b9ab2.5dac48"
         ],
         "x": 1610,
         "y": 2620,
@@ -5940,6 +5941,9 @@
         "func": "var min = global.get(\"min_temp\")\nvar max = global.get(\"max_temp\")\nvar target_temp = msg.payload\nvar offset = 0.5\nif (target_temp >= max){\n    target_temp = max\n} \nelse if (target_temp <= min){\n    target_temp = min\n}\n\n// voltage = 1 or current = 2 selection\nvar selector = 1\nif(selector==1){\n    var ana_max = 4000\n    var ana_min = 0\n}\nelse{\n    var ana_max = 4000\n    var ana_min = 800\n}\n\nvar target_percentage = ((target_temp-offset)-min) / (max-min)\n\nvar target_ana = target_percentage *(ana_max-ana_min)+ana_min\n\nmsg.payload = parseFloat((target_ana).toFixed(0))\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 1230,
         "y": 2240,
         "wires": [
@@ -8375,7 +8379,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "rational fit",
-        "func": "var q = global.get(\"Flow\");\nvar q_max = 4\n\nvar p1 = 8594\nvar p2 = 4.258\nvar q1 = 6451\nvar q2 = 2322\n//var Q = 43440\nvar Q = 31500\nvar x = q/q_max\n\nf = (p1*x+p2)/(x^2+q1*x+q2)\nmsg.payload = f*Q\n\nreturn msg;",
+        "func": "var q = global.get(\"Flow\");\nvar q_max = 4.6\n\nvar p1 = 8594\nvar p2 = 4.258\nvar q1 = 6451\nvar q2 = 2322\nvar Q = 52000\n//var Q = 31500\nvar x = q/q_max\n\nf = (p1*x+p2)/(x^2+q1*x+q2)\nmsg.payload = f*Q\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -9441,7 +9445,7 @@
         "z": "8e025641.d38868",
         "name": "",
         "group": "e9d68c7e.c2fed",
-        "order": 7,
+        "order": 8,
         "width": "6",
         "height": "6",
         "label": "Return Water Temp (RWT)",
@@ -9452,7 +9456,7 @@
         "nodata": "",
         "dot": false,
         "ymin": "10",
-        "ymax": "25",
+        "ymax": "24",
         "removeOlder": "2",
         "removeOlderPoints": "",
         "removeOlderUnit": "60",
@@ -9483,7 +9487,7 @@
         "z": "8e025641.d38868",
         "name": "",
         "group": "e9d68c7e.c2fed",
-        "order": 8,
+        "order": 6,
         "width": "6",
         "height": "6",
         "label": "Supply Air Temp (SAT)",
@@ -9785,8 +9789,8 @@
         "passthru": true,
         "topic": "",
         "format": "{{value}} &deg C",
-        "min": "18",
-        "max": "25",
+        "min": "12",
+        "max": "18",
         "step": 1,
         "x": 260,
         "y": 2420,
@@ -9855,7 +9859,7 @@
         "type": "PID",
         "z": "8e025641.d38868",
         "name": "",
-        "setpoint": "18",
+        "setpoint": "13",
         "pb": 1,
         "ti": "10",
         "td": 0,
@@ -10290,7 +10294,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "1800",
+                "to": "1300",
                 "tot": "num"
             }
         ],
@@ -11836,7 +11840,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "7750",
+                "to": "8000",
                 "tot": "num"
             }
         ],
@@ -13694,7 +13698,8 @@
         "wires": [
             [
                 "527f5617.17e358",
-                "b584fcd8.da1c2"
+                "b584fcd8.da1c2",
+                "1fe43506.98c34b"
             ]
         ]
     },
@@ -13881,6 +13886,47 @@
             [
                 "2a1ca63e.b3b5da"
             ]
+        ]
+    },
+    {
+        "id": "e19b9ab2.5dac48",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "8c809dae.e3377"
+        ],
+        "x": 1075,
+        "y": 500,
+        "wires": [
+            [
+                "a184cc5.85b0a3"
+            ]
+        ]
+    },
+    {
+        "id": "1fe43506.98c34b",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "occupancy",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 1320,
+        "wires": [
+            []
         ]
     }
 ]
