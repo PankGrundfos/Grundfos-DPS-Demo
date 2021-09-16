@@ -319,7 +319,7 @@
         "type": "ui_group",
         "name": "Water Use",
         "tab": "ea9b6de0.2693d",
-        "order": 7,
+        "order": 13,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -419,7 +419,7 @@
         "type": "ui_group",
         "name": "Temperatures",
         "tab": "ea9b6de0.2693d",
-        "order": 8,
+        "order": 14,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -429,7 +429,7 @@
         "type": "ui_group",
         "name": "Pump Status",
         "tab": "ea9b6de0.2693d",
-        "order": 9,
+        "order": 15,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -439,7 +439,7 @@
         "type": "ui_group",
         "name": "Pump Duty Point",
         "tab": "ea9b6de0.2693d",
-        "order": 5,
+        "order": 6,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -479,7 +479,7 @@
         "type": "ui_group",
         "name": "Power and RPM",
         "tab": "ea9b6de0.2693d",
-        "order": 6,
+        "order": 8,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -508,6 +508,56 @@
         "type": "ui_group",
         "name": "Gauges",
         "tab": "2a42b678.b2f55a",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "74217efe.d1157",
+        "type": "ui_group",
+        "name": "Flow",
+        "tab": "ea9b6de0.2693d",
+        "order": 9,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "4a14d019.c00ec",
+        "type": "ui_group",
+        "name": "Pressure",
+        "tab": "ea9b6de0.2693d",
+        "order": 11,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6cf50984.a6fc68",
+        "type": "ui_group",
+        "name": "RWT",
+        "tab": "ea9b6de0.2693d",
+        "order": 12,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "aff1ae9a.a4eca",
+        "type": "ui_group",
+        "name": "Supply Air Temp (SAT)",
+        "tab": "ea9b6de0.2693d",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "3d8b1872.9dcde8",
+        "type": "ui_group",
+        "name": "Power Flow",
+        "tab": "ea9b6de0.2693d",
         "order": 7,
         "disp": true,
         "width": "6",
@@ -842,7 +892,7 @@
         "emptyMsgOnFail": false,
         "keepMsgProperties": false,
         "x": 1180,
-        "y": 1720,
+        "y": 1940,
         "wires": [
             [],
             []
@@ -857,7 +907,7 @@
         "label": "Occupancy ",
         "tooltip": "",
         "group": "3c1be052.4e291",
-        "order": 9,
+        "order": 10,
         "width": "4",
         "height": "1",
         "passthru": true,
@@ -867,7 +917,7 @@
         "max": "100",
         "step": 1,
         "x": 810,
-        "y": 1160,
+        "y": 1380,
         "wires": [
             [
                 "527f5617.17e358",
@@ -881,7 +931,7 @@
         "z": "8e025641.d38868",
         "d": true,
         "group": "3c1be052.4e291",
-        "order": 11,
+        "order": 12,
         "width": "2",
         "height": "1",
         "name": "Load Setting Display",
@@ -889,7 +939,7 @@
         "format": "{{msg.payload | uppercase}} %",
         "layout": "row-left",
         "x": 1220,
-        "y": 1180,
+        "y": 1400,
         "wires": []
     },
     {
@@ -917,7 +967,7 @@
         "officon": "",
         "offcolor": "",
         "x": 220,
-        "y": 2100,
+        "y": 2320,
         "wires": [
             [
                 "37a240a8.2a56b",
@@ -944,7 +994,7 @@
         "default_start": false,
         "differ": false,
         "x": 690,
-        "y": 1760,
+        "y": 1980,
         "wires": [
             [
                 "7d668a69.ac5654",
@@ -973,7 +1023,7 @@
         "to": "",
         "reg": false,
         "x": 920,
-        "y": 1700,
+        "y": 1920,
         "wires": [
             [
                 "17617508.717e2b",
@@ -990,7 +1040,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1550,
-        "y": 1660,
+        "y": 1880,
         "wires": [
             []
         ]
@@ -1000,14 +1050,14 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Return Water Temp",
-        "func": "var p = msg.payload\nvar q = global.get(\"Flow\")*0.00028; //water Flow, assumed to be constant\nvar Tw_s = flow.get(\"Tw_s\") || 10;\nvar Ts = flow.get(\"Ts\") || 2;\nvar Tw_r = flow.get(\"Tw_r\") || 10;\nvar rho = 997\nvar V = 0.09  // m3, volume of water \nvar M = V*rho  // Mass of water volumne\nvar c = 4182  // water heat storage capacity\nvar C = M*c  // Thermal Capacity of Coil\n\nvar dot_T = (-q*rho*c*(Tw_r-Tw_s)+p)/C\n\nvar T = Tw_r+dot_T*Ts\n\nflow.set(\"Tw_r\",T)\nmsg.Tw_r = T\nmsg.payload = parseFloat(T).toFixed(2);\nmsg.topic = \"water\"\nreturn msg;",
+        "func": "var p = msg.payload\nvar q = global.get(\"Flow\")*0.00028; //water Flow, assumed to be constant\nvar Tw_s = flow.get(\"Tw_s\") || 10;\nvar Ts = flow.get(\"Ts\") || 1;\nvar Tw_r = flow.get(\"Tw_r\") || 10;\nvar rho = 997\nvar V = 0.09  // m3, volume of water \nvar M = V*rho  // Mass of water volumne\nvar c = 4182  // water heat storage capacity\nvar C = M*c  // Thermal Capacity of Coil\n\nvar dot_T = (-q*rho*c*(Tw_r-Tw_s)+p)/C\n\nvar T = Tw_r+dot_T*Ts\n\nflow.set(\"Tw_r\",T)\nmsg.Tw_r = T\nmsg.payload = parseFloat(T).toFixed(2);\nmsg.topic = \"water\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1170,
-        "y": 1900,
+        "y": 2120,
         "wires": [
             [
                 "9634441f.02a058",
@@ -1027,9 +1077,11 @@
                 "pt": "flow"
             },
             {
-                "t": "delete",
+                "t": "set",
                 "p": "Ta_s",
-                "pt": "flow"
+                "pt": "flow",
+                "to": "Ta_s_setting",
+                "tot": "flow"
             },
             {
                 "t": "delete",
@@ -1043,7 +1095,7 @@
         "to": "",
         "reg": false,
         "x": 1180,
-        "y": 1380,
+        "y": 1600,
         "wires": [
             []
         ]
@@ -1053,14 +1105,14 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Supply Air Temp",
-        "func": "var p = msg.payload\nvar q = 2.5; //Air Flow, assumed to be constant\n//var q = 2;\nvar O = flow.get('occupancy')\n//var q = 3-((O)/100)*1; \nflow.set('q_air',q)\nvar Ta_s = flow.get(\"Ta_s\") || 28;\nvar Ts = flow.get(\"Ts\") || 2\nvar Ta_r = flow.get(\"Ta_r\") || 28\nvar rho = 1.225\nvar V = 80  // m3, volume of ahu \nvar M = V*rho  // Mass of air volumne\nvar c = 1000  // air heat storage capacity\nvar C = M*c  // Thermal Capacity of Coil\n\nvar dot_T = (q*rho*c*(Ta_r-Ta_s)-p)/C\n\nvar T = Ta_s+dot_T*Ts\n\nflow.set(\"Ta_s\",T)\nmsg.Ta_s = T\nmsg.payload = parseFloat(T).toFixed(2);\nmsg.topic = \"air\"\n\nreturn msg;",
+        "func": "var p = msg.payload\nvar q = 2.5; //Air Flow, assumed to be constant\n//var q = 2;\nvar O = flow.get('occupancy')\n//var q = 3-((O)/100)*1; \nflow.set('q_air',q)\nvar Ta_s = flow.get(\"Ta_s\");\nvar Ts = flow.get(\"Ts\") || 1\nvar Ta_r = flow.get(\"Ta_r\");\nvar rho = 1.225\nvar V = 80  // m3, volume of ahu \nvar M = V*rho  // Mass of air volumne\nvar c = 1000  // air heat storage capacity\nvar C = M*c  // Thermal Capacity of Coil\n\nvar dot_T = (q*rho*c*(Ta_r-Ta_s)-p)/C\n\nvar T = Ta_s+dot_T*Ts\n\nflow.set(\"Ta_s\",T)\nmsg.Ta_s = T\nmsg.payload = parseFloat(T).toFixed(2);\nmsg.topic = \"air\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"Ta_s\",22)\nflow.set(\"Ta_r\",28)",
         "finalize": "",
         "libs": [],
         "x": 1160,
-        "y": 1980,
+        "y": 2200,
         "wires": [
             [
                 "687b1b48.367654",
@@ -1084,7 +1136,7 @@
         "finalize": "",
         "libs": [],
         "x": 1200,
-        "y": 1280,
+        "y": 1500,
         "wires": [
             [
                 "f03f8095.fdd05"
@@ -1095,32 +1147,32 @@
         "id": "2cfc9e27.5879f2",
         "type": "ui_text",
         "z": "8e025641.d38868",
-        "group": "e9d68c7e.c2fed",
+        "group": "aff1ae9a.a4eca",
         "order": 3,
-        "width": "3",
-        "height": "1",
+        "width": "0",
+        "height": "0",
         "name": "Supply Air Temp",
-        "label": "SAT",
+        "label": "",
         "format": "{{msg.payload}} &deg C",
         "layout": "row-spread",
-        "x": 2200,
-        "y": 2080,
+        "x": 1780,
+        "y": 1340,
         "wires": []
     },
     {
         "id": "9634441f.02a058",
         "type": "ui_text",
         "z": "8e025641.d38868",
-        "group": "e9d68c7e.c2fed",
+        "group": "6cf50984.a6fc68",
         "order": 4,
-        "width": "3",
-        "height": "1",
+        "width": "0",
+        "height": "0",
         "name": "Return Water Temp",
         "label": "RWT",
         "format": "{{msg.payload}} &deg C",
         "layout": "row-spread",
-        "x": 2230,
-        "y": 1960,
+        "x": 1790,
+        "y": 1220,
         "wires": []
     },
     {
@@ -1129,7 +1181,7 @@
         "z": "8e025641.d38868",
         "d": true,
         "group": "3c1be052.4e291",
-        "order": 8,
+        "order": 9,
         "width": 0,
         "height": 0,
         "name": "",
@@ -1137,7 +1189,7 @@
         "format": "{{msg.payload}} &deg C",
         "layout": "row-spread",
         "x": 1440,
-        "y": 1280,
+        "y": 1500,
         "wires": []
     },
     {
@@ -1146,7 +1198,7 @@
         "z": "8e025641.d38868",
         "name": "",
         "group": "3c1be052.4e291",
-        "order": 16,
+        "order": 17,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -1159,12 +1211,13 @@
         "payloadType": "str",
         "topic": "",
         "x": 290,
-        "y": 1600,
+        "y": 1820,
         "wires": [
             [
                 "f9b47b7a.8ce028",
                 "ba7905db.dd2498",
-                "37a240a8.2a56b"
+                "37a240a8.2a56b",
+                "d3b7e040.f2fb3"
             ]
         ]
     },
@@ -1178,7 +1231,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1240,
-        "y": 2180,
+        "y": 2400,
         "wires": [
             [
                 "f93a390e.8dbc88"
@@ -1208,7 +1261,7 @@
         "payload": "stop",
         "payloadType": "str",
         "x": 150,
-        "y": 1720,
+        "y": 1940,
         "wires": [
             [
                 "2cc2a262.00c6be"
@@ -1454,7 +1507,7 @@
             "1bae50b.64892af"
         ],
         "x": 395,
-        "y": 1900,
+        "y": 2120,
         "wires": [
             [
                 "6ce46225.466d9c"
@@ -1470,7 +1523,7 @@
         "label": "Coil Efficiency ",
         "tooltip": "",
         "group": "3c1be052.4e291",
-        "order": 12,
+        "order": 13,
         "width": "4",
         "height": "1",
         "passthru": true,
@@ -1480,7 +1533,7 @@
         "max": "100",
         "step": 1,
         "x": 820,
-        "y": 1080,
+        "y": 1300,
         "wires": [
             [
                 "6a0923eb.346dbc",
@@ -1493,20 +1546,30 @@
         "type": "inject",
         "z": "8e025641.d38868",
         "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "1",
         "topic": "",
         "payload": "100",
         "payloadType": "num",
-        "x": 630,
-        "y": 1300,
+        "x": 570,
+        "y": 1480,
         "wires": [
             [
                 "4e2b3ef9.c5ab7",
                 "fe5a10e7.5c9e4",
-                "f86635c1.b63258"
+                "f86635c1.b63258",
+                "2905e85b.417598"
             ]
         ]
     },
@@ -1516,7 +1579,7 @@
         "z": "8e025641.d38868",
         "d": true,
         "group": "3c1be052.4e291",
-        "order": 13,
+        "order": 14,
         "width": "2",
         "height": "1",
         "name": "Coil Status display",
@@ -1524,7 +1587,7 @@
         "format": "{{msg.payload | uppercase}} %",
         "layout": "row-left",
         "x": 1230,
-        "y": 1080,
+        "y": 1300,
         "wires": []
     },
     {
@@ -1547,7 +1610,7 @@
         "to": "",
         "reg": false,
         "x": 1190,
-        "y": 1000,
+        "y": 1220,
         "wires": [
             []
         ]
@@ -1563,7 +1626,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 1460,
-        "y": 2180,
+        "y": 2400,
         "wires": []
     },
     {
@@ -1577,7 +1640,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 1250,
-        "y": 1660,
+        "y": 1880,
         "wires": []
     },
     {
@@ -1635,8 +1698,8 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
-            "#aec7e8",
+            "#9d0027",
+            "#a3465d",
             "#ff7f0e",
             "#2ca02c",
             "#98df8a",
@@ -1677,8 +1740,8 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
-            "#aec7e8",
+            "#f49500",
+            "#f49500",
             "#ff7f0e",
             "#2ca02c",
             "#98df8a",
@@ -3132,11 +3195,11 @@
         "type": "ui_chart",
         "z": "8e025641.d38868",
         "name": "Flow Chart",
-        "group": "e9d68c7e.c2fed",
+        "group": "74217efe.d1157",
         "order": 5,
-        "width": "6",
-        "height": "6",
-        "label": "Flow",
+        "width": "0",
+        "height": "0",
+        "label": "",
         "chartType": "line",
         "legend": "true",
         "xformat": "HH:mm:ss",
@@ -3152,19 +3215,19 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
-            "#aec7e8",
+            "#9d0027",
+            "#a3465d",
             "#ff7f0e",
             "#2ca02c",
             "#98df8a",
-            "#d62728",
+            "#9d0027",
             "#ff9896",
             "#9467bd",
             "#c5b0d5"
         ],
         "outputs": 1,
         "x": 1330,
-        "y": 560,
+        "y": 780,
         "wires": [
             []
         ]
@@ -3173,28 +3236,28 @@
         "id": "733022fb.9aaa6c",
         "type": "ui_text",
         "z": "8e025641.d38868",
-        "group": "e9d68c7e.c2fed",
+        "group": "74217efe.d1157",
         "order": 1,
-        "width": "3",
-        "height": "1",
+        "width": "0",
+        "height": "0",
         "name": "Flow Value",
-        "label": "Flow:",
+        "label": "Flow",
         "format": "{{msg.payload}} m<sup>3</sup>/h",
         "layout": "row-spread",
         "x": 1330,
-        "y": 600,
+        "y": 820,
         "wires": []
     },
     {
         "id": "78b73203.c60a2c",
         "type": "ui_chart",
         "z": "8e025641.d38868",
-        "name": "Head Chart",
-        "group": "e9d68c7e.c2fed",
+        "name": "Pressure Chart",
+        "group": "4a14d019.c00ec",
         "order": 7,
-        "width": "6",
-        "height": "6",
-        "label": "Head Chart",
+        "width": "0",
+        "height": "0",
+        "label": "",
         "chartType": "line",
         "legend": "true",
         "xformat": "HH:mm:ss",
@@ -3210,8 +3273,8 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
-            "#aec7e8",
+            "#facb7a",
+            "#f49500",
             "#ff7f0e",
             "#2ca02c",
             "#98df8a",
@@ -3221,8 +3284,8 @@
             "#c5b0d5"
         ],
         "outputs": 1,
-        "x": 1330,
-        "y": 660,
+        "x": 1340,
+        "y": 880,
         "wires": [
             []
         ]
@@ -3231,16 +3294,16 @@
         "id": "f7fef7f8.fbc6b8",
         "type": "ui_text",
         "z": "8e025641.d38868",
-        "group": "e9d68c7e.c2fed",
+        "group": "4a14d019.c00ec",
         "order": 2,
-        "width": "3",
+        "width": "6",
         "height": "1",
         "name": "Head Value",
-        "label": "Head",
+        "label": "Pressure ",
         "format": "{{msg.payload}} m",
         "layout": "row-spread",
         "x": 1330,
-        "y": 700,
+        "y": 920,
         "wires": []
     },
     {
@@ -3266,7 +3329,7 @@
         "seg1": "",
         "seg2": "",
         "x": 1330,
-        "y": 440,
+        "y": 660,
         "wires": []
     },
     {
@@ -3292,7 +3355,7 @@
         "seg1": "",
         "seg2": "",
         "x": 1310,
-        "y": 480,
+        "y": 700,
         "wires": []
     },
     {
@@ -3302,7 +3365,7 @@
         "name": "Simulation page",
         "info": "",
         "x": 1340,
-        "y": 400,
+        "y": 620,
         "wires": []
     },
     {
@@ -3316,7 +3379,7 @@
             "6e89ac88.ae7414"
         ],
         "x": 415,
-        "y": 520,
+        "y": 740,
         "wires": [
             [
                 "1e2de285.e6ccad"
@@ -3332,12 +3395,11 @@
             "1bae50b.64892af"
         ],
         "x": 415,
-        "y": 600,
+        "y": 820,
         "wires": [
             [
                 "a184cc5.85b0a3",
-                "733022fb.9aaa6c",
-                "56065ced.3ff764"
+                "733022fb.9aaa6c"
             ]
         ]
     },
@@ -3352,7 +3414,7 @@
             "d3f2e4b2.919ad8"
         ],
         "x": 415,
-        "y": 700,
+        "y": 920,
         "wires": [
             [
                 "f7fef7f8.fbc6b8",
@@ -3371,7 +3433,7 @@
             "f5cbe01d.8fd82"
         ],
         "x": 415,
-        "y": 480,
+        "y": 700,
         "wires": [
             [
                 "ab514648.863708"
@@ -3387,7 +3449,7 @@
             "18405476.592f2c"
         ],
         "x": 1735,
-        "y": 2500,
+        "y": 2720,
         "wires": []
     },
     {
@@ -3760,6 +3822,9 @@
         "func": "if (msg.payload.data[0] === 0){\n    msg.payload = \"Constant Curve\"\n}\nelse if (msg.payload.data[0] == 1){\n    msg.payload = \"Constant Curve\"\n}\n\nelse if (msg.payload.data[0] == 3){\n    msg.payload = \"Constant Head\"\n}\n\nelse if (msg.payload.data[0] == 4){\n    msg.payload = \"Constant Pressure\"\n}\nelse if (msg.payload.data[0] == 5){\n    msg.payload = \"Constant Diff. Pressure\"\n}\nelse if (msg.payload.data[0] == 6){\n    msg.payload = \"Prop. Pressure\"\n}\n\nelse if (msg.payload.data[0] == 7){\n    msg.payload = \"Constant Flow\"\n}\nelse if (msg.payload.data[0] == 8){\n    msg.payload = \"Constant Temperature\"\n}\n\nelse if (msg.payload.data[0] == 9){\n    msg.payload = \"Constant Diff. Temperature\"\n}\n\nelse if (msg.payload.data[0] == 128){\n    msg.payload = \"AutoADAPT\"\n}\n\nelse if (msg.payload.data[0] == 129){\n    msg.payload = \"FlowADAPT\"\n}\n\nelse {\n    msg.payload = \"Undefined\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 1020,
         "y": 2140,
         "wires": [
@@ -3829,7 +3894,8 @@
             ],
             [],
             [
-                "c6c73b4.2f250c8"
+                "c6c73b4.2f250c8",
+                "e7f9e8ef.66a2b8"
             ],
             [],
             [
@@ -4522,11 +4588,16 @@
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 312\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = true\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 880,
         "y": 2980,
         "wires": [
             [
-                "d6bfd62d.c07ba8"
+                "d6bfd62d.c07ba8",
+                "4e8d9d4b.2b73a4",
+                "3e69578c.35dde8"
             ]
         ]
     },
@@ -4918,8 +4989,8 @@
         "z": "2db3774.f99f488",
         "name": "Control Mode",
         "links": [
-            "e339adc6.00ad9",
-            "c8b04249.2c53c"
+            "c8b04249.2c53c",
+            "e339adc6.00ad9"
         ],
         "x": 2340,
         "y": 2140,
@@ -5930,7 +6001,7 @@
         "channel": "2",
         "address": "0",
         "x": 1440,
-        "y": 2240,
+        "y": 2460,
         "wires": []
     },
     {
@@ -5945,7 +6016,7 @@
         "finalize": "",
         "libs": [],
         "x": 1230,
-        "y": 2240,
+        "y": 2460,
         "wires": [
             [
                 "f5fec105.b6829"
@@ -6028,7 +6099,16 @@
         "type": "inject",
         "z": "2db3774.f99f488",
         "name": "",
-        "repeat": "2",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -8386,7 +8466,7 @@
         "finalize": "",
         "libs": [],
         "x": 920,
-        "y": 1780,
+        "y": 2000,
         "wires": [
             [
                 "cc551212.e15ec",
@@ -8534,7 +8614,9 @@
         "type": "link out",
         "z": "b066e7c5.874fa8",
         "name": "valve config",
-        "links": [],
+        "links": [
+            "9e4d4d7f.c8db7"
+        ],
         "x": 1030,
         "y": 100,
         "wires": [],
@@ -9432,7 +9514,7 @@
         "payload": "",
         "payloadType": "str",
         "x": 810,
-        "y": 1300,
+        "y": 1520,
         "wires": [
             [
                 "f9b47b7a.8ce028"
@@ -9443,12 +9525,12 @@
         "id": "6563a96e.3c5808",
         "type": "ui_chart",
         "z": "8e025641.d38868",
-        "name": "",
-        "group": "e9d68c7e.c2fed",
+        "name": "Return Water Temp (RWT)",
+        "group": "6cf50984.a6fc68",
         "order": 8,
-        "width": "6",
-        "height": "6",
-        "label": "Return Water Temp (RWT)",
+        "width": "0",
+        "height": "0",
+        "label": "",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -9464,7 +9546,7 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
+            "#2ca02c",
             "#aec7e8",
             "#ff7f0e",
             "#2ca02c",
@@ -9475,8 +9557,8 @@
             "#c5b0d5"
         ],
         "outputs": 1,
-        "x": 2290,
-        "y": 1900,
+        "x": 1820,
+        "y": 1160,
         "wires": [
             []
         ]
@@ -9485,12 +9567,12 @@
         "id": "2e13de3b.fdcb62",
         "type": "ui_chart",
         "z": "8e025641.d38868",
-        "name": "",
-        "group": "e9d68c7e.c2fed",
+        "name": "Supply Air Temp (SAT)",
+        "group": "aff1ae9a.a4eca",
         "order": 6,
         "width": "6",
         "height": "6",
-        "label": "Supply Air Temp (SAT)",
+        "label": "",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -9517,8 +9599,8 @@
             "#c5b0d5"
         ],
         "outputs": 1,
-        "x": 2220,
-        "y": 2040,
+        "x": 1800,
+        "y": 1300,
         "wires": [
             []
         ]
@@ -9543,7 +9625,7 @@
         "to": "",
         "reg": false,
         "x": 1180,
-        "y": 1460,
+        "y": 1680,
         "wires": [
             [
                 "6563a96e.3c5808",
@@ -9564,7 +9646,7 @@
             "317a4aa2.10a196"
         ],
         "x": 1075,
-        "y": 540,
+        "y": 760,
         "wires": [
             [
                 "a184cc5.85b0a3",
@@ -9587,7 +9669,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1960,
-        "y": 660,
+        "y": 880,
         "wires": []
     },
     {
@@ -9603,7 +9685,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1960,
-        "y": 720,
+        "y": 940,
         "wires": []
     },
     {
@@ -9619,7 +9701,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1960,
-        "y": 460,
+        "y": 680,
         "wires": []
     },
     {
@@ -9635,7 +9717,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1950,
-        "y": 420,
+        "y": 640,
         "wires": []
     },
     {
@@ -9651,7 +9733,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1950,
-        "y": 540,
+        "y": 760,
         "wires": []
     },
     {
@@ -9667,7 +9749,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1960,
-        "y": 600,
+        "y": 820,
         "wires": []
     },
     {
@@ -9680,7 +9762,7 @@
             "bcbd680d.1e2548"
         ],
         "x": 1615,
-        "y": 420,
+        "y": 640,
         "wires": [
             [
                 "9faae946.87d168"
@@ -9697,7 +9779,7 @@
             "c43ad46c.b5cd28"
         ],
         "x": 1615,
-        "y": 460,
+        "y": 680,
         "wires": [
             [
                 "fd69b7d1.a1b5f8"
@@ -9714,7 +9796,7 @@
             "d4962b58.4ec068"
         ],
         "x": 1615,
-        "y": 540,
+        "y": 760,
         "wires": [
             [
                 "dae77770.6d49c8"
@@ -9731,7 +9813,7 @@
             "482a08b1.c5d5b8"
         ],
         "x": 1615,
-        "y": 600,
+        "y": 820,
         "wires": [
             [
                 "e591dd41.d331e"
@@ -9749,7 +9831,7 @@
             "d1dc324f.0537"
         ],
         "x": 1615,
-        "y": 660,
+        "y": 880,
         "wires": [
             [
                 "d476cc36.c6a7"
@@ -9767,7 +9849,7 @@
             "80a06905.9cdd48"
         ],
         "x": 1615,
-        "y": 740,
+        "y": 960,
         "wires": [
             [
                 "c1d0fede.ab671"
@@ -9782,7 +9864,7 @@
         "label": "Setpoint",
         "tooltip": "",
         "group": "3c1be052.4e291",
-        "order": 7,
+        "order": 8,
         "width": 0,
         "height": 0,
         "wrap": false,
@@ -9793,7 +9875,7 @@
         "max": "16",
         "step": 1,
         "x": 260,
-        "y": 2420,
+        "y": 2640,
         "wires": [
             [
                 "e264a0c6.9b016",
@@ -9810,7 +9892,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 960,
-        "y": 2600,
+        "y": 2820,
         "wires": [
             [
                 "9e9734bb.1248b8"
@@ -9842,7 +9924,7 @@
         "officon": "",
         "offcolor": "",
         "x": 170,
-        "y": 2280,
+        "y": 2500,
         "wires": [
             [
                 "9e9734bb.1248b8",
@@ -9869,7 +9951,7 @@
         "enable": 1,
         "disabled_op": 0,
         "x": 1010,
-        "y": 2320,
+        "y": 2540,
         "wires": [
             [
                 "3703330f.8c704c"
@@ -9885,7 +9967,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1200,
-        "y": 2320,
+        "y": 2540,
         "wires": [
             [
                 "d1fb832d.4f0d"
@@ -9901,7 +9983,7 @@
             "7fc90694.30e7c8"
         ],
         "x": 1700,
-        "y": 2320,
+        "y": 2540,
         "wires": [],
         "l": true
     },
@@ -9925,7 +10007,7 @@
         "to": "",
         "reg": false,
         "x": 590,
-        "y": 2340,
+        "y": 2560,
         "wires": [
             [
                 "2a1ca63e.b3b5da"
@@ -9950,7 +10032,7 @@
         "default_start": true,
         "differ": false,
         "x": 1250,
-        "y": 2600,
+        "y": 2820,
         "wires": [
             [
                 "53cb02d3.0747bc"
@@ -9964,9 +10046,9 @@
         "name": "",
         "channel": "6",
         "input_type": "7",
-        "interval": "2000",
+        "interval": "1000",
         "x": 450,
-        "y": 760,
+        "y": 980,
         "wires": [
             [
                 "21d181ad.d2e70e"
@@ -9982,7 +10064,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 660,
-        "y": 760,
+        "y": 980,
         "wires": [
             [
                 "78b73203.c60a2c"
@@ -10009,7 +10091,7 @@
         "to": "",
         "reg": false,
         "x": 910,
-        "y": 660,
+        "y": 880,
         "wires": [
             [
                 "78b73203.c60a2c"
@@ -10037,7 +10119,7 @@
         "to": "",
         "reg": false,
         "x": 1040,
-        "y": 2420,
+        "y": 2640,
         "wires": [
             [
                 "2720cebb.7775f2"
@@ -10060,7 +10142,7 @@
         "enable": 1,
         "disabled_op": 0,
         "x": 1190,
-        "y": 2420,
+        "y": 2640,
         "wires": [
             [
                 "3a3bd281.f7f52e"
@@ -10086,7 +10168,7 @@
         "default_start": false,
         "differ": false,
         "x": 1510,
-        "y": 2420,
+        "y": 2640,
         "wires": [
             [
                 "53cb02d3.0747bc"
@@ -10103,7 +10185,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1340,
-        "y": 2440,
+        "y": 2660,
         "wires": [
             [
                 "e7243153.1f8e3"
@@ -10119,7 +10201,7 @@
             "4ee910df.0f5bb"
         ],
         "x": 1460,
-        "y": 2900,
+        "y": 3120,
         "wires": [],
         "l": true
     },
@@ -10132,7 +10214,7 @@
             "765db47f.d0042c"
         ],
         "x": 1460,
-        "y": 2960,
+        "y": 3180,
         "wires": [],
         "l": true
     },
@@ -10145,7 +10227,7 @@
             "5d2035e.d723acc"
         ],
         "x": 1440,
-        "y": 3020,
+        "y": 3240,
         "wires": [],
         "l": true
     },
@@ -10158,7 +10240,7 @@
             "d76bd6a5.9d8c58"
         ],
         "x": 1460,
-        "y": 3120,
+        "y": 3340,
         "wires": [],
         "l": true
     },
@@ -10171,7 +10253,7 @@
             "8f0692b7.1ae0d"
         ],
         "x": 1470,
-        "y": 3080,
+        "y": 3300,
         "wires": [],
         "l": true
     },
@@ -10195,7 +10277,7 @@
         "to": "",
         "reg": false,
         "x": 1110,
-        "y": 3060,
+        "y": 3280,
         "wires": [
             [
                 "3e8337c3.c37638",
@@ -10223,7 +10305,7 @@
         "to": "",
         "reg": false,
         "x": 1140,
-        "y": 3120,
+        "y": 3340,
         "wires": [
             [
                 "32c3acf8.337714",
@@ -10253,7 +10335,7 @@
         "to": "",
         "reg": false,
         "x": 1120,
-        "y": 3180,
+        "y": 3400,
         "wires": [
             [
                 "23a897ff.ee9898",
@@ -10277,7 +10359,7 @@
         "randomUnits": "seconds",
         "drop": false,
         "x": 570,
-        "y": 1960,
+        "y": 2180,
         "wires": [
             [
                 "6ce46225.466d9c"
@@ -10304,7 +10386,7 @@
         "to": "",
         "reg": false,
         "x": 1100,
-        "y": 3240,
+        "y": 3460,
         "wires": [
             [
                 "cc39cac7.c24b38",
@@ -10398,12 +10480,16 @@
         "id": "56065ced.3ff764",
         "type": "function",
         "z": "8e025641.d38868",
+        "d": true,
         "name": "Format Data",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\n//var title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1830,
-        "y": 1000,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2590,
+        "y": 620,
         "wires": [
             [
                 "225ba7f4.2f47c8"
@@ -10414,6 +10500,7 @@
         "id": "225ba7f4.2f47c8",
         "type": "template",
         "z": "8e025641.d38868",
+        "d": true,
         "name": "Format HTML",
         "field": "template",
         "fieldType": "msg",
@@ -10421,8 +10508,8 @@
         "syntax": "mustache",
         "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 10,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Head [m]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 5,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [m\\u00B3/h]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
         "output": "str",
-        "x": 1900,
-        "y": 1060,
+        "x": 2640,
+        "y": 780,
         "wires": [
             [
                 "26825313.33462c"
@@ -10435,7 +10522,7 @@
         "z": "8e025641.d38868",
         "group": "8911427a.03002",
         "name": "Scatter Plot",
-        "order": 0,
+        "order": 1,
         "width": "6",
         "height": "6",
         "format": "this will be ignored",
@@ -10443,8 +10530,8 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 1890,
-        "y": 1120,
+        "x": 3190,
+        "y": 840,
         "wires": [
             []
         ]
@@ -10453,6 +10540,7 @@
         "id": "d2640b62.73e8f8",
         "type": "change",
         "z": "8e025641.d38868",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -10464,6 +10552,16 @@
                 "t": "delete",
                 "p": "count",
                 "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data2",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data3",
+                "pt": "msg"
             }
         ],
         "action": "",
@@ -10472,7 +10570,7 @@
         "to": "",
         "reg": false,
         "x": 1340,
-        "y": 520,
+        "y": 740,
         "wires": [
             []
         ]
@@ -10496,7 +10594,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 190,
-        "y": 360,
+        "y": 580,
         "wires": [
             [
                 "c8580ba5.f0d028"
@@ -10522,7 +10620,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 200,
-        "y": 420,
+        "y": 640,
         "wires": [
             [
                 "d1053f80.00f18"
@@ -10544,7 +10642,7 @@
         "topic": "",
         "name": "",
         "x": 570,
-        "y": 360,
+        "y": 580,
         "wires": [
             []
         ]
@@ -10558,10 +10656,10 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html>\n\n<body >\n<h1 style=\"max-width:600px\">\n    Grundfos Distributed Pumping Temperature Control Demo\n</h1>\n<p style=\"max-width:600px\">\n    The purpose of this demo is to showcase the MAGNA3 capabilities within temperature control and other features. For this purpose, simplified thermodynamic equations are implemented in the Dedicated Control Unit (DCU), to simulate the temperature response of a coil supplied by chilled water. The coil is assumed to be ideal performance, meaning that the coil characteristic follows the prescribed curve with no deviations. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/intro.png\" alt=\"intro\" style=\"width:100%;height:auto;background-color:#FFFFFF\" >\n</p>\n<p style=\"max-width:600px\">\n    The demo offers two different control options, a DPS coil pump mode and a PICV mode. The following sections will explain the difference between these two modes. The flow meter reading is used as an input for the Coil Power output curve for both modes.\n</p>\n<h2 style=\"max-width:600px\">DPS Coil Pump Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the pump the controller is passing the simulated Supply Air Temperature (SAT) to the as an analog signal in the 0-10V range. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/dps_ahu.PNG\" alt=\"DPS AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n    The pump is using its’ Constant Temperature Control mode, which automatically adjusts the speed of the pump, and thereby the flow in the system, according to the load in the simulation and the setpoint defined via the Dashboard. It is possible to change the Controller parameters, Kp and Ti which are respectively the Proportional- and Integrator constants. This will affect the pumps response and serve to showcase and educate the impact of tuning the Controller in the pump\n</p>\n\n<h2 style=\"max-width:600px\">PICV Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the flow is controlled via a PICV valve which lift-percentage is controlled by DCU which is using a PI-controller to maintain the SUT at the defined Setpoint.\n</p>\n<p style=\"max-width:600px\">\n<img src=\"/valve_ahu.PNG\" alt=\"Valve AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n   In this mode, the pump is serving as a pressure source, and operates in Constant Head Control mode. This is representative of ASHRAE’s recommendation of maintaining a constant differential pressure across the Index branch, as the pump head in this small closed-loop demo is equal to the differential pressure across the whole demo loop.<br>\n   It is possible to configure the travel speed of the PICV, but as default it is set to 24 sec/mm which is the factory default speed of this particular PICV.\n</p>\n\n</body>\n</html>\n",
+        "template": "<!DOCTYPE html>\n<html>\n\n<body >\n<h1 style=\"max-width:600px\">\n    Grundfos Distributed Pumping Temperature Control Demo\n</h1>\n<p style=\"max-width:600px\">\n    The purpose of this demo is to showcase the MAGNA3 capabilities within temperature control and other features. For this purpose, simplified thermodynamic equations are implemented in the Dedicated Control Unit (DCU), to simulate the temperature response of a coil supplied by chilled water. The coil is assumed to be ideal performance, meaning that the coil characteristic follows the prescribed curve with no deviations. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/intro.png\" alt=\"intro\" style=\"width:100%;height:auto;background-color:#FFFFFF\" >\n</p>\n<p style=\"max-width:600px\">\n    The demo offers two different control options, a DPS coil pump mode and a PICV mode. The following sections will explain the difference between these two modes. The flow meter reading is used as an input for the Coil Power output curve for both modes.\n</p>\n<h2 style=\"max-width:600px\">DPS Coil Pump Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the pump the controller is passing the simulated Supply Air Temperature (SAT) to the as an analog signal in the 0-10V range. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/dps_ahu.PNG\" alt=\"DPS AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n    The pump is using its’ Constant Temperature Control mode, which automatically adjusts the speed of the pump, and thereby the flow in the system, according to the load in the simulation and the setpoint defined via the Dashboard. It is possible to change the Controller parameters, Kp and Ti which are respectively the Proportional- and Integrator constants. This will affect the pumps response and serve to showcase and educate the impact of tuning the Controller in the pump\n</p>\n\n<h2 style=\"max-width:600px\">PICV Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the flow is controlled via a PICV valve which lift-percentage is controlled by DCU which is using a PI-controller to maintain the SAT at the defined Setpoint.\n</p>\n<p style=\"max-width:600px\">\n<img src=\"/valve_ahu.PNG\" alt=\"Valve AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n   In this mode, the pump is serving as a pressure source, and operates in Constant Head Control mode. This is representative of ASHRAE’s recommendation of maintaining a constant differential pressure across the Index branch, as the pump head in this small closed-loop demo is equal to the differential pressure across the whole demo loop.<br>\n   It is possible to configure the travel speed of the PICV, but as default it is set to 24 sec/mm which is the factory default speed of this particular PICV.\n</p>\n\n</body>\n</html>\n",
         "output": "str",
         "x": 390,
-        "y": 420,
+        "y": 640,
         "wires": [
             [
                 "346fdfe1.142f"
@@ -10773,7 +10871,8 @@
         "links": [
             "8524019f.447c5",
             "69c6232e.720bcc",
-            "a3c7b322.2011b"
+            "a3c7b322.2011b",
+            "85d4fca1.c8769"
         ],
         "x": 1040,
         "y": 240,
@@ -10927,7 +11026,7 @@
             "18405476.592f2c"
         ],
         "x": 1450,
-        "y": 3160,
+        "y": 3380,
         "wires": [],
         "l": true
     },
@@ -11025,7 +11124,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 1700,
-        "y": 2380,
+        "y": 2600,
         "wires": []
     },
     {
@@ -11046,7 +11145,7 @@
         "default_start": false,
         "differ": false,
         "x": 930,
-        "y": 2180,
+        "y": 2400,
         "wires": [
             [
                 "2a1ca63e.b3b5da"
@@ -11076,7 +11175,7 @@
         "repair": false,
         "outputs": 2,
         "x": 430,
-        "y": 2100,
+        "y": 2320,
         "wires": [
             [
                 "6624409e.9adad"
@@ -11101,7 +11200,7 @@
         "topic": "",
         "name": "",
         "x": 950,
-        "y": 1980,
+        "y": 2200,
         "wires": [
             []
         ]
@@ -11135,7 +11234,8 @@
         "y": 1680,
         "wires": [
             [
-                "c59565b2.e748e8"
+                "c59565b2.e748e8",
+                "d1c8f753.6139f8"
             ]
         ]
     },
@@ -11270,7 +11370,7 @@
             "c4ecf8db.4c02a8"
         ],
         "x": 1135,
-        "y": 860,
+        "y": 1080,
         "wires": [
             [
                 "254ba8e6.24b308"
@@ -11286,7 +11386,7 @@
         "order": 3,
         "width": 0,
         "height": 0,
-        "label": "Valve",
+        "label": "",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -11314,7 +11414,7 @@
         ],
         "outputs": 1,
         "x": 1355,
-        "y": 860,
+        "y": 1080,
         "wires": [
             []
         ]
@@ -11399,7 +11499,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1990,
-        "y": 760,
+        "y": 980,
         "wires": []
     },
     {
@@ -11415,7 +11515,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1990,
-        "y": 800,
+        "y": 1020,
         "wires": []
     },
     {
@@ -11431,7 +11531,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1990,
-        "y": 840,
+        "y": 1060,
         "wires": []
     },
     {
@@ -11443,7 +11543,7 @@
             "41ea40e6.68c41"
         ],
         "x": 1735,
-        "y": 760,
+        "y": 980,
         "wires": [
             [
                 "b6dae729.d63798"
@@ -11459,7 +11559,7 @@
             "996c1a35.a797f8"
         ],
         "x": 1735,
-        "y": 800,
+        "y": 1020,
         "wires": [
             [
                 "1425bb7e.e7d0b5"
@@ -11475,7 +11575,7 @@
             "7ec69130.1d01e"
         ],
         "x": 1735,
-        "y": 840,
+        "y": 1060,
         "wires": [
             [
                 "d4b7547e.9faca8"
@@ -11562,7 +11662,7 @@
         "label": "Kp Value",
         "tooltip": "",
         "group": "3c1be052.4e291",
-        "order": 14,
+        "order": 15,
         "width": 0,
         "height": 0,
         "wrap": false,
@@ -11573,7 +11673,7 @@
         "max": "3",
         "step": "0.1",
         "x": 480,
-        "y": 940,
+        "y": 1160,
         "wires": [
             [
                 "e5a0ffcb.97161",
@@ -11589,7 +11689,7 @@
         "label": "Ti Value",
         "tooltip": "",
         "group": "3c1be052.4e291",
-        "order": 15,
+        "order": 16,
         "width": 0,
         "height": 0,
         "wrap": false,
@@ -11600,7 +11700,7 @@
         "max": "100",
         "step": 1,
         "x": 480,
-        "y": 1020,
+        "y": 1240,
         "wires": [
             [
                 "2c488125.bc9f2e",
@@ -11620,7 +11720,7 @@
         "finalize": "",
         "libs": [],
         "x": 690,
-        "y": 900,
+        "y": 1120,
         "wires": [
             [
                 "a811223.44d96e"
@@ -11639,7 +11739,7 @@
         "finalize": "",
         "libs": [],
         "x": 680,
-        "y": 980,
+        "y": 1200,
         "wires": [
             [
                 "b44b4cae.7c6e2"
@@ -11655,7 +11755,7 @@
             "a7d55e0f.1ee58"
         ],
         "x": 845,
-        "y": 900,
+        "y": 1120,
         "wires": []
     },
     {
@@ -11667,7 +11767,7 @@
             "a59ebb2a.d92da8"
         ],
         "x": 825,
-        "y": 980,
+        "y": 1200,
         "wires": []
     },
     {
@@ -11711,7 +11811,7 @@
             "d48e0f6.55f7ff"
         ],
         "x": 1640,
-        "y": 2780,
+        "y": 3000,
         "wires": [],
         "l": true
     },
@@ -11735,7 +11835,7 @@
         "to": "",
         "reg": false,
         "x": 1130,
-        "y": 3000,
+        "y": 3220,
         "wires": [
             [
                 "b0e1b816.4a68b8",
@@ -11764,7 +11864,7 @@
         "to": "",
         "reg": false,
         "x": 1120,
-        "y": 2660,
+        "y": 2880,
         "wires": [
             [
                 "4ac673c6.d40e8c",
@@ -11793,7 +11893,7 @@
         "to": "",
         "reg": false,
         "x": 1120,
-        "y": 2700,
+        "y": 2920,
         "wires": [
             [
                 "6d13db02.51d864",
@@ -11821,7 +11921,7 @@
         "to": "",
         "reg": false,
         "x": 1130,
-        "y": 2740,
+        "y": 2960,
         "wires": [
             [
                 "32c3acf8.337714",
@@ -11850,7 +11950,7 @@
         "to": "",
         "reg": false,
         "x": 1100,
-        "y": 2820,
+        "y": 3040,
         "wires": [
             [
                 "cc39cac7.c24b38"
@@ -11877,7 +11977,7 @@
         "to": "",
         "reg": false,
         "x": 1110,
-        "y": 2780,
+        "y": 3000,
         "wires": [
             [
                 "f9b9e419.416fb8",
@@ -11920,7 +12020,7 @@
         "default_start": true,
         "differ": false,
         "x": 850,
-        "y": 2880,
+        "y": 3100,
         "wires": [
             [
                 "5b34ede0.d0f784"
@@ -11945,7 +12045,7 @@
         "default_start": false,
         "differ": false,
         "x": 850,
-        "y": 2680,
+        "y": 2900,
         "wires": [
             [
                 "a70aa816.35ab78"
@@ -11964,7 +12064,7 @@
         "finalize": "",
         "libs": [],
         "x": 450,
-        "y": 2840,
+        "y": 3060,
         "wires": [
             [
                 "e864dbd8.9e4c58"
@@ -11981,7 +12081,7 @@
             "94a56a65.a973b8"
         ],
         "x": 185,
-        "y": 920,
+        "y": 1140,
         "wires": [
             [
                 "b36c09c3.b171e8",
@@ -12000,7 +12100,7 @@
             "789fb35.6e5a34c"
         ],
         "x": 195,
-        "y": 980,
+        "y": 1200,
         "wires": [
             [
                 "7e9ccfcc.e475f",
@@ -12157,7 +12257,7 @@
             "5c756ee7.251f3"
         ],
         "x": 1660,
-        "y": 2840,
+        "y": 3060,
         "wires": [],
         "l": true
     },
@@ -12220,7 +12320,7 @@
         "randomUnits": "seconds",
         "drop": false,
         "x": 440,
-        "y": 900,
+        "y": 1120,
         "wires": [
             [
                 "e5a0ffcb.97161"
@@ -12243,7 +12343,7 @@
         "randomUnits": "seconds",
         "drop": false,
         "x": 440,
-        "y": 980,
+        "y": 1200,
         "wires": [
             [
                 "2c488125.bc9f2e"
@@ -12257,7 +12357,7 @@
         "name": "",
         "events": "all",
         "x": 1460,
-        "y": 80,
+        "y": 300,
         "wires": [
             [
                 "c9586a01.e6f078"
@@ -12278,7 +12378,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1650,
-        "y": 80,
+        "y": 300,
         "wires": []
     },
     {
@@ -12300,7 +12400,7 @@
         "payloadType": "json",
         "topic": "",
         "x": 490,
-        "y": 80,
+        "y": 300,
         "wires": [
             [
                 "ba4468bf.562b38",
@@ -12330,7 +12430,7 @@
         "payloadType": "json",
         "topic": "",
         "x": 510,
-        "y": 200,
+        "y": 420,
         "wires": [
             [
                 "ba4468bf.562b38",
@@ -12347,7 +12447,7 @@
         "z": "8e025641.d38868",
         "name": "start sim",
         "group": "3c1be052.4e291",
-        "order": 17,
+        "order": 18,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -12360,7 +12460,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 220,
-        "y": 1960,
+        "y": 2180,
         "wires": [
             [
                 "37a240a8.2a56b",
@@ -12389,7 +12489,7 @@
         "to": "",
         "reg": false,
         "x": 240,
-        "y": 120,
+        "y": 340,
         "wires": [
             [
                 "57b9b1a0.68d4c"
@@ -12416,7 +12516,7 @@
         "to": "",
         "reg": false,
         "x": 500,
-        "y": 20,
+        "y": 240,
         "wires": [
             [
                 "5b7085a3.b2e2dc"
@@ -12443,7 +12543,7 @@
         "to": "",
         "reg": false,
         "x": 240,
-        "y": 160,
+        "y": 380,
         "wires": [
             [
                 "5b7085a3.b2e2dc"
@@ -12470,7 +12570,7 @@
         "to": "",
         "reg": false,
         "x": 500,
-        "y": 280,
+        "y": 500,
         "wires": [
             [
                 "57b9b1a0.68d4c"
@@ -12486,7 +12586,7 @@
             "4d495d24.918b94"
         ],
         "x": 975,
-        "y": 200,
+        "y": 420,
         "wires": []
     },
     {
@@ -12509,7 +12609,7 @@
         "to": "",
         "reg": false,
         "x": 820,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "3ab048c9.6e9548"
@@ -12536,7 +12636,7 @@
         "to": "",
         "reg": false,
         "x": 810,
-        "y": 220,
+        "y": 440,
         "wires": [
             [
                 "3ab048c9.6e9548"
@@ -12552,7 +12652,7 @@
             "3ab048c9.6e9548"
         ],
         "x": 215,
-        "y": 2180,
+        "y": 2400,
         "wires": [
             [
                 "50c5117e.83fcc",
@@ -12569,7 +12669,7 @@
         "z": "8e025641.d38868",
         "name": "",
         "group": "3c1be052.4e291",
-        "order": 18,
+        "order": 19,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -12582,7 +12682,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 1150,
-        "y": 280,
+        "y": 500,
         "wires": [
             [
                 "e82ef047.e73f8"
@@ -12601,7 +12701,7 @@
         "finalize": "",
         "libs": [],
         "x": 1300,
-        "y": 280,
+        "y": 500,
         "wires": [
             [
                 "ba4468bf.562b38",
@@ -12623,7 +12723,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1570,
-        "y": 260,
+        "y": 480,
         "wires": []
     },
     {
@@ -12644,12 +12744,16 @@
         "payload": "",
         "payloadType": "date",
         "x": 130,
-        "y": 40,
+        "y": 260,
         "wires": [
             [
                 "98e9afc7.7d3a1",
                 "2c4da08a.ea684",
-                "57d4ea7b.d2fca4"
+                "57d4ea7b.d2fca4",
+                "356479e2.e25146",
+                "f3a70a5b.824ad8",
+                "dacf8ed6.9461",
+                "c3277edf.6dbc"
             ]
         ]
     },
@@ -12673,7 +12777,7 @@
         "to": "",
         "reg": false,
         "x": 990,
-        "y": 280,
+        "y": 500,
         "wires": [
             [
                 "9f5840e2.7eea5"
@@ -13278,7 +13382,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 170,
-        "y": 780,
+        "y": 1000,
         "wires": [
             [
                 "b36c09c3.b171e8"
@@ -13303,7 +13407,7 @@
         "payload": "8",
         "payloadType": "num",
         "x": 170,
-        "y": 840,
+        "y": 1060,
         "wires": [
             [
                 "7e9ccfcc.e475f"
@@ -13345,7 +13449,7 @@
         "template": "<p style=\"max-width:500px\">\n<img src=\"/pump.jpg\" alt=\"intro\" style=\"width:100%;height:auto;\">\n</p>",
         "output": "str",
         "x": 770,
-        "y": 2120,
+        "y": 2340,
         "wires": [
             [
                 "bfcaabf4.2dbb08"
@@ -13372,7 +13476,7 @@
         "to": "",
         "reg": false,
         "x": 570,
-        "y": 2120,
+        "y": 2340,
         "wires": [
             [
                 "92bb3ba6.d1a6a8"
@@ -13399,7 +13503,7 @@
         "to": "",
         "reg": false,
         "x": 570,
-        "y": 2060,
+        "y": 2280,
         "wires": [
             [
                 "3187452e.34726a"
@@ -13418,7 +13522,7 @@
         "template": "<p style=\"max-width:500px\">\n<img src=\"/valve.jpg\" alt=\"intro\" style=\"width:100%;height:auto;\">\n</p>",
         "output": "str",
         "x": 770,
-        "y": 2060,
+        "y": 2280,
         "wires": [
             [
                 "bfcaabf4.2dbb08"
@@ -13437,7 +13541,7 @@
         "template": "<!DOCTYPE html>\n<html>\n\n<body style=\"background-color:blue\">\n<h1 style=\"max-width:600px\">\n    How to use this dashboard\n</h1>\n<p style=\"max-width:600px\">\n<img src=\"/help_simulation.png\" alt=\"intro\" style=\"width:100%;height:auto;\" >\n</p>\n\n<p style=\"max-width:600px\">\n  <ol style=\"max-width:600px\">\n      <li>Select either the pump or PICV mode</li>\n      <li>Occupancy can be changed on the fly, to change the load on the system</li>\n      <li>When ready, press start and the simulation will begin and you can follow the progress on the different plots</li>\n      <li>If you which to stop or restart the simulation, press the Reset</li>\n      <li>You can toggle the view of the Pump Status view by clicking this button</li>\n  </ol> \n</p>\n\n\n</body>\n</html>\n",
         "output": "str",
         "x": 360,
-        "y": 360,
+        "y": 580,
         "wires": [
             [
                 "346fdfe1.142f"
@@ -13464,7 +13568,7 @@
         "to": "",
         "reg": false,
         "x": 710,
-        "y": 940,
+        "y": 1160,
         "wires": [
             []
         ]
@@ -13489,7 +13593,7 @@
         "to": "",
         "reg": false,
         "x": 730,
-        "y": 1020,
+        "y": 1240,
         "wires": [
             []
         ]
@@ -13521,7 +13625,7 @@
         "to": "",
         "reg": false,
         "x": 790,
-        "y": 100,
+        "y": 320,
         "wires": [
             [
                 "7e3b44ef.a5290c",
@@ -13556,7 +13660,7 @@
         "to": "",
         "reg": false,
         "x": 790,
-        "y": 140,
+        "y": 360,
         "wires": [
             [
                 "789fb35.6e5a34c"
@@ -13590,7 +13694,7 @@
         "to": "",
         "reg": false,
         "x": 930,
-        "y": 20,
+        "y": 240,
         "wires": [
             [
                 "9162db0.f91d128",
@@ -13625,7 +13729,7 @@
         "to": "",
         "reg": false,
         "x": 930,
-        "y": 60,
+        "y": 280,
         "wires": [
             [
                 "789fb35.6e5a34c"
@@ -13641,7 +13745,7 @@
             "e57fe2da.d2a4a"
         ],
         "x": 1220,
-        "y": 20,
+        "y": 240,
         "wires": [],
         "l": true
     },
@@ -13654,7 +13758,7 @@
             "be7f968e.69f518"
         ],
         "x": 1210,
-        "y": 60,
+        "y": 280,
         "wires": [],
         "l": true
     },
@@ -13672,7 +13776,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 560,
-        "y": 860,
+        "y": 1080,
         "wires": []
     },
     {
@@ -13683,7 +13787,7 @@
         "label": "Occupancy",
         "tooltip": "",
         "group": "3c1be052.4e291",
-        "order": 10,
+        "order": 11,
         "width": 0,
         "height": 0,
         "wrap": false,
@@ -13694,7 +13798,7 @@
         "max": "100",
         "step": "5",
         "x": 840,
-        "y": 1220,
+        "y": 1440,
         "wires": [
             [
                 "527f5617.17e358",
@@ -13881,7 +13985,7 @@
             "ba498411.be17f8"
         ],
         "x": 765,
-        "y": 2280,
+        "y": 2500,
         "wires": [
             [
                 "2a1ca63e.b3b5da"
@@ -13897,7 +14001,7 @@
             "8c809dae.e3377"
         ],
         "x": 1075,
-        "y": 500,
+        "y": 720,
         "wires": [
             [
                 "a184cc5.85b0a3"
@@ -13924,9 +14028,1222 @@
         "to": "",
         "reg": false,
         "x": 1220,
-        "y": 1320,
+        "y": 1540,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "7075866e.a78558",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "flow hide",
+        "group": "3c1be052.4e291",
+        "order": 20,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Flow",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#9d0027",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 500,
+        "y": 60,
+        "wires": [
+            [
+                "356479e2.e25146"
+            ]
+        ]
+    },
+    {
+        "id": "3afe4aea.89fb46",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "Pressure hide",
+        "group": "3c1be052.4e291",
+        "order": 21,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Press",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#9d0027",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 520,
+        "y": 120,
+        "wires": [
+            [
+                "f3a70a5b.824ad8"
+            ]
+        ]
+    },
+    {
+        "id": "aaa1a41f.cbd778",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "RWT hide",
+        "group": "3c1be052.4e291",
+        "order": 22,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "RWT",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#9d0027",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "dacf8ed6.9461"
+            ]
+        ]
+    },
+    {
+        "id": "356479e2.e25146",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "",
+        "func": "\nvar bookkeeper = context.get('bookkeeper')\nif (bookkeeper == true){\n    msg.payload = {\"group\":{\"hide\":[\"Simulations_Flow\"]}}\n    context.set(\"bookkeeper\",false)\n}\nelse if(bookkeeper == false) {\n    msg.payload = {\"group\":{\"show\":[\"Simulations_Flow\"]}}\n    context.set(\"bookkeeper\",true)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"bookkeeper\", false)",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 60,
+        "wires": [
+            [
+                "ba4468bf.562b38",
+                "1f75b5ff.821e0a"
+            ]
+        ]
+    },
+    {
+        "id": "f3a70a5b.824ad8",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "",
+        "func": "\nvar bookkeeper = context.get('bookkeeper')\nif (bookkeeper == true){\n    msg.payload = {\"group\":{\"hide\":[\"Simulations_Pressure\"]}}\n    context.set(\"bookkeeper\",false)\n}\nelse if(bookkeeper == false) {\n    msg.payload = {\"group\":{\"show\":[\"Simulations_Pressure\"]}}\n    context.set(\"bookkeeper\",true)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"bookkeeper\", false)",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 120,
+        "wires": [
+            [
+                "ba4468bf.562b38",
+                "a709fa20.07f418"
+            ]
+        ]
+    },
+    {
+        "id": "dacf8ed6.9461",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "",
+        "func": "\nvar bookkeeper = context.get('bookkeeper')\nif (bookkeeper == true){\n    msg.payload = {\"group\":{\"hide\":[\"Simulations_RWT\"]}}\n    context.set(\"bookkeeper\",false)\n}\nelse if(bookkeeper == false) {\n    msg.payload = {\"group\":{\"show\":[\"Simulations_RWT\"]}}\n    context.set(\"bookkeeper\",true)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"bookkeeper\", false)",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 180,
+        "wires": [
+            [
+                "ba4468bf.562b38",
+                "51ca9342.0a399c"
+            ]
+        ]
+    },
+    {
+        "id": "85d4fca1.c8769",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "1bae50b.64892af"
+        ],
+        "x": 2295,
+        "y": 620,
+        "wires": [
+            [
+                "56065ced.3ff764",
+                "f4b1d9e1.66e3f8"
+            ]
+        ]
+    },
+    {
+        "id": "e7f9e8ef.66a2b8",
+        "type": "change",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.data[0]",
+                "pt": "msg",
+                "to": "actual_c_mode",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1070,
+        "y": 2200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87364c02.dc5b3",
+        "type": "switch",
+        "z": "8e025641.d38868",
+        "name": "Flow Head",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "6",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 2730,
+        "y": 500,
+        "wires": [
+            [
+                "256ded6.419a412"
+            ],
+            [
+                "54d22229.57ed6c"
+            ],
+            [
+                "b708365b.77eaf8"
+            ]
+        ]
+    },
+    {
+        "id": "f4b1d9e1.66e3f8",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "actual_c_mode",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2470,
+        "y": 540,
+        "wires": [
+            [
+                "87364c02.dc5b3",
+                "294324d4.a9765c"
+            ]
+        ]
+    },
+    {
+        "id": "f7d5a42b.882b18",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "prepare all data",
+        "func": "var legend1 = \"DPS\";\nvar legend2 = \"Constant Head\";\nvar legend3 = \"Prop. Press.\";\nvar title = \"Pump Duty Point\"\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nvar data1 = flow.get('data1')||'';\n\nvar data2 = flow.get('data2')||'';\n\nvar data3 = flow.get('data3')||'';\n\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                \"legend2\" : legend2,\n                \"data2\"   : data2,\n                \"legend3\" : legend3,\n                \"data3\"   : data3\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3010,
+        "y": 680,
+        "wires": [
+            [
+                "5365a9a8.3482d8"
+            ]
+        ]
+    },
+    {
+        "id": "b708365b.77eaf8",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "Format Data - DPS",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2930,
+        "y": 560,
+        "wires": [
+            [
+                "f7d5a42b.882b18"
+            ]
+        ]
+    },
+    {
+        "id": "256ded6.419a412",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "Format Data - Constant",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data2')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data2\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2950,
+        "y": 460,
+        "wires": [
+            [
+                "f7d5a42b.882b18"
+            ]
+        ]
+    },
+    {
+        "id": "54d22229.57ed6c",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "Format Data - prop",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data3')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data3\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2930,
+        "y": 500,
+        "wires": [
+            [
+                "f7d5a42b.882b18",
+                "2ff119c8.c77936"
+            ]
+        ]
+    },
+    {
+        "id": "5365a9a8.3482d8",
+        "type": "template",
+        "z": "8e025641.d38868",
+        "name": "Format HTML",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 9,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Head [m]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 5,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [m\\u00B3/h]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
+        "output": "str",
+        "x": 3020,
+        "y": 760,
+        "wires": [
+            [
+                "26825313.33462c"
+            ]
+        ]
+    },
+    {
+        "id": "294324d4.a9765c",
+        "type": "switch",
+        "z": "8e025641.d38868",
+        "name": "Flow Power",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "6",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 2750,
+        "y": 960,
+        "wires": [
+            [
+                "909973ef.4161"
+            ],
+            [
+                "126391cc.39835e"
+            ],
+            [
+                "675f6a9d.fdbab4"
+            ]
+        ]
+    },
+    {
+        "id": "aed7b0.7c24985",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "prepare all data",
+        "func": "var legend1 = \"DPS\";\nvar legend2 = \"Constant Head\";\nvar legend3 = \"Prop. Press.\";\nvar title = \"Power / Flow\"\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nvar data1 = flow.get('data4')||'';\n\nvar data2 = flow.get('data5')||'';\n\nvar data3 = flow.get('data6')||'';\n\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                \"legend2\" : legend2,\n                \"data2\"   : data2,\n                \"legend3\" : legend3,\n                \"data3\"   : data3\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3030,
+        "y": 1140,
+        "wires": [
+            [
+                "ecb7747c.1a13b8"
+            ]
+        ]
+    },
+    {
+        "id": "675f6a9d.fdbab4",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "Format Data - DPS",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data4')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data4\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2950,
+        "y": 1020,
+        "wires": [
+            [
+                "aed7b0.7c24985"
+            ]
+        ]
+    },
+    {
+        "id": "909973ef.4161",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "Format Data - Constant",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data5')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data5\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2970,
+        "y": 920,
+        "wires": [
+            [
+                "aed7b0.7c24985"
+            ]
+        ]
+    },
+    {
+        "id": "126391cc.39835e",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "Format Data - prop",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data6')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data6\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2950,
+        "y": 960,
+        "wires": [
+            [
+                "aed7b0.7c24985",
+                "23b11e26.074c32"
+            ]
+        ]
+    },
+    {
+        "id": "ecb7747c.1a13b8",
+        "type": "template",
+        "z": "8e025641.d38868",
+        "name": "Format HTML",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 200,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Power [W]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 5,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [m\\u00B3/h]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
+        "output": "str",
+        "x": 3040,
+        "y": 1220,
+        "wires": [
+            [
+                "6687a70e.1e7af8"
+            ]
+        ]
+    },
+    {
+        "id": "4e8d9d4b.2b73a4",
+        "type": "change",
+        "z": "2db3774.f99f488",
+        "d": true,
+        "name": "Global W",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.data[0]",
+                "pt": "msg",
+                "to": "W",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1320,
+        "y": 2940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6687a70e.1e7af8",
+        "type": "ui_template",
+        "z": "8e025641.d38868",
+        "group": "3d8b1872.9dcde8",
+        "name": "Scatter Plot",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "this will be ignored",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 3210,
+        "y": 1280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c7e4bfe.4a3c78",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "data1",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "count",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data2",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data3",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data4",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data5",
+                "pt": "flow"
+            },
+            {
+                "t": "delete",
+                "p": "data6",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3600,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8b9efa3.b1aa3",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "Flow Power Switch",
+        "group": "8911427a.03002",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "label": "Flow / Power",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#9d0027",
+        "icon": "",
+        "payload": "{\"group\":{\"hide\":[\"Simulations_Pump_Duty_Point\"],\"show\":[\"Simulations_Power_Flow\"]}}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 3370,
+        "y": 1060,
+        "wires": [
+            [
+                "ccc1fe2.f1b4d"
+            ]
+        ]
+    },
+    {
+        "id": "8c6cdf5c.2bb5e",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "Duty Point Switch",
+        "group": "3d8b1872.9dcde8",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "label": "Duty Point",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#9d0027",
+        "icon": "",
+        "payload": "{\"group\":{\"show\":[\"Simulations_Pump_Duty_Point\"],\"hide\":[\"Simulations_Power_Flow\"]}}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 3370,
+        "y": 980,
+        "wires": [
+            [
+                "ccc1fe2.f1b4d"
+            ]
+        ]
+    },
+    {
+        "id": "ccc1fe2.f1b4d",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "To UI Control",
+        "links": [
+            "bff86c0a.f7e11"
+        ],
+        "x": 3580,
+        "y": 1020,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "bff86c0a.f7e11",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "ccc1fe2.f1b4d"
+        ],
+        "x": 1225,
+        "y": 160,
+        "wires": [
+            [
+                "ba4468bf.562b38"
+            ]
+        ]
+    },
+    {
+        "id": "81cb39b3.1ae7e8",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "Duty Clear",
+        "group": "8911427a.03002",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Clear Data",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"group\":{\"show\":[\"Simulations_Pump_Duty_Point\"],\"hide\":[\"Simulations_Power_Flow\"]}}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 3250,
+        "y": 900,
+        "wires": [
+            [
+                "9c7e4bfe.4a3c78"
+            ]
+        ]
+    },
+    {
+        "id": "68a71be0.931824",
+        "type": "ui_button",
+        "z": "8e025641.d38868",
+        "name": "Power Clear",
+        "group": "3d8b1872.9dcde8",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Clear Data",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"group\":{\"show\":[\"Simulations_Pump_Duty_Point\"],\"hide\":[\"Simulations_Power_Flow\"]}}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 3250,
+        "y": 940,
+        "wires": [
+            [
+                "9c7e4bfe.4a3c78"
+            ]
+        ]
+    },
+    {
+        "id": "c3277edf.6dbc",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "start up",
+        "links": [
+            "2a92e13.a8d5c1e"
+        ],
+        "x": 225,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "2a92e13.a8d5c1e",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "c3277edf.6dbc"
+        ],
+        "x": 3145,
+        "y": 1020,
+        "wires": [
+            [
+                "8c6cdf5c.2bb5e"
+            ]
+        ]
+    },
+    {
+        "id": "3f19d1a1.f1514e",
+        "type": "ui_numeric",
+        "z": "8e025641.d38868",
+        "name": "SAT Start Temp",
+        "label": "SAT Start",
+        "tooltip": "",
+        "group": "3c1be052.4e291",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "",
+        "format": "{{value}} &deg C",
+        "min": "13",
+        "max": "28",
+        "step": 1,
+        "x": 760,
+        "y": 1600,
+        "wires": [
+            [
+                "3b290629.b5f58a"
+            ]
+        ]
+    },
+    {
+        "id": "3b290629.b5f58a",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "Ta_s",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "Ta_s_setting",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 1600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2905e85b.417598",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "22",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 1600,
+        "wires": [
+            [
+                "3f19d1a1.f1514e"
+            ]
+        ]
+    },
+    {
+        "id": "9e4d4d7f.c8db7",
+        "type": "link in",
+        "z": "651c65ba.af2eec",
+        "name": "",
+        "links": [
+            "1c54fde9.8ddaf2"
+        ],
+        "x": 75,
+        "y": 120,
+        "wires": [
+            [
+                "12043a28.b09486",
+                "9c393c74.8d28f"
+            ]
+        ]
+    },
+    {
+        "id": "bd79ad69.16686",
+        "type": "ui_toast",
+        "z": "651c65ba.af2eec",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 550,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "9c393c74.8d28f",
+        "type": "change",
+        "z": "651c65ba.af2eec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Initiated",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Valve Configuration",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 60,
+        "wires": [
+            [
+                "bd79ad69.16686"
+            ]
+        ]
+    },
+    {
+        "id": "b26c7e52.3addf",
+        "type": "ui_toast",
+        "z": "651c65ba.af2eec",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 970,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "d1c8f753.6139f8",
+        "type": "change",
+        "z": "651c65ba.af2eec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Completed",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Valve Configuration",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 1640,
+        "wires": [
+            [
+                "b26c7e52.3addf"
+            ]
+        ]
+    },
+    {
+        "id": "3e69578c.35dde8",
+        "type": "function",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "func": "var W = msg.payload.data[0]\n\nglobal.set('W',W)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 2900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1f75b5ff.821e0a",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1400,
+        "y": 40,
+        "wires": [
+            [
+                "c062d4f6.b15118"
+            ]
+        ]
+    },
+    {
+        "id": "a709fa20.07f418",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1400,
+        "y": 80,
+        "wires": [
+            [
+                "ca3b85c0.452bd8"
+            ]
+        ]
+    },
+    {
+        "id": "51ca9342.0a399c",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1400,
+        "y": 120,
+        "wires": [
+            [
+                "7aabdbb8.9e54e4"
+            ]
+        ]
+    },
+    {
+        "id": "c062d4f6.b15118",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "to flow",
+        "links": [
+            "18612b91.e23344"
+        ],
+        "x": 1585,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ca3b85c0.452bd8",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "to press",
+        "links": [
+            "37cabd43.7bc5e2"
+        ],
+        "x": 1595,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7aabdbb8.9e54e4",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "to rwt",
+        "links": [
+            "f8af88e1.f266a8"
+        ],
+        "x": 1575,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f8af88e1.f266a8",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "7aabdbb8.9e54e4"
+        ],
+        "x": 1575,
+        "y": 1160,
+        "wires": [
+            [
+                "6563a96e.3c5808"
+            ]
+        ]
+    },
+    {
+        "id": "37cabd43.7bc5e2",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "ca3b85c0.452bd8"
+        ],
+        "x": 1055,
+        "y": 860,
+        "wires": [
+            [
+                "78b73203.c60a2c"
+            ]
+        ]
+    },
+    {
+        "id": "18612b91.e23344",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "c062d4f6.b15118"
+        ],
+        "x": 975,
+        "y": 740,
+        "wires": [
+            [
+                "a184cc5.85b0a3"
+            ]
+        ]
+    },
+    {
+        "id": "2ff119c8.c77936",
+        "type": "debug",
+        "z": "8e025641.d38868",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3210,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "23b11e26.074c32",
+        "type": "debug",
+        "z": "8e025641.d38868",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3260,
+        "y": 1126.5999755859375,
+        "wires": []
+    },
+    {
+        "id": "d3b7e040.f2fb3",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 1840,
+        "wires": [
+            [
+                "f201fdbd.f32f2"
+            ]
+        ]
+    },
+    {
+        "id": "f201fdbd.f32f2",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "stop",
+        "links": [
+            "25b834f7.c50dbc"
+        ],
+        "x": 735,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "25b834f7.c50dbc",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "f201fdbd.f32f2"
+        ],
+        "x": 1095,
+        "y": 3120,
+        "wires": [
+            [
+                "f70d1c06.5de01"
+            ]
         ]
     }
 ]
