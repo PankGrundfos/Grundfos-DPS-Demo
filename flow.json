@@ -10656,7 +10656,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html>\n\n<body >\n<h1 style=\"max-width:600px\">\n    Grundfos Distributed Pumping Temperature Control Demo\n</h1>\n<p style=\"max-width:600px\">\n    The purpose of this demo is to showcase the MAGNA3 capabilities within temperature control and other features. For this purpose, simplified thermodynamic equations are implemented in the Dedicated Control Unit (DCU), to simulate the temperature response of a coil supplied by chilled water. The coil is assumed to be ideal performance, meaning that the coil characteristic follows the prescribed curve with no deviations. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/intro.png\" alt=\"intro\" style=\"width:100%;height:auto;background-color:#FFFFFF\" >\n</p>\n<p style=\"max-width:600px\">\n    The demo offers two different control options, a DPS coil pump mode and a PICV mode. The following sections will explain the difference between these two modes. The flow meter reading is used as an input for the Coil Power output curve for both modes.\n</p>\n<h2 style=\"max-width:600px\">DPS Coil Pump Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the pump the controller is passing the simulated Supply Air Temperature (SAT) to the as an analog signal in the 0-10V range. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/dps_ahu.PNG\" alt=\"DPS AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n    The pump is using its’ Constant Temperature Control mode, which automatically adjusts the speed of the pump, and thereby the flow in the system, according to the load in the simulation and the setpoint defined via the Dashboard. It is possible to change the Controller parameters, Kp and Ti which are respectively the Proportional- and Integrator constants. This will affect the pumps response and serve to showcase and educate the impact of tuning the Controller in the pump\n</p>\n\n<h2 style=\"max-width:600px\">PICV Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the flow is controlled via a PICV valve which lift-percentage is controlled by DCU which is using a PI-controller to maintain the SAT at the defined Setpoint.\n</p>\n<p style=\"max-width:600px\">\n<img src=\"/valve_ahu.PNG\" alt=\"Valve AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n   In this mode, the pump is serving as a pressure source, and operates in Constant Head Control mode. This is representative of ASHRAE’s recommendation of maintaining a constant differential pressure across the Index branch, as the pump head in this small closed-loop demo is equal to the differential pressure across the whole demo loop.<br>\n   It is possible to configure the travel speed of the PICV, but as default it is set to 24 sec/mm which is the factory default speed of this particular PICV.\n</p>\n\n</body>\n</html>\n",
+        "template": "<!DOCTYPE html>\n<html>\n\n<body >\n<h1 style=\"max-width:600px\">\n    Grundfos Distributed Pumping Temperature Control Demo\n</h1>\n<p style=\"max-width:600px\">\n    The purpose of this demo is to showcase the MAGNA3 capabilities within temperature control and other features. For this purpose, simplified thermodynamic equations are implemented in the Dedicated Control Unit (DCU), to simulate the temperature response of a coil supplied by chilled water. The coil is assumed to be ideal performance, meaning that the coil characteristic follows the prescribed curve with no deviations. \n    This model does not include or simulate humidity, which while an important part of A/C control does not impact the temperature control element except as a setpoint influencer.  \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/intro.png\" alt=\"intro\" style=\"width:100%;height:auto;background-color:#FFFFFF\" >\n</p>\n<p style=\"max-width:600px\">\n    The incoming air temperature is the load on the system and as it passes over the coil, it is cooled down. This demo has the possiblity to simulate a change in occupancy of the building, which will reduce the load of the system, thereby it is possible to not only see the initial temperature response but also how the demo behaves as the load on the building changes.\n</p>\n<p style=\"max-width:600px\">\n    The demo offers two different control options, a DPS coil pump mode and a PICV mode. The following sections will explain the difference between these two modes. The flow meter reading is used as an input for the Coil Power output curve for both modes.\n</p>\n\n<h2 style=\"max-width:600px\">DPS Coil Pump Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the pump the controller is passing the simulated Supply Air Temperature (SAT) to the as an analog signal in the 0-10V range. \n</p>\n<p style=\"max-width:600px\">\n<img src=\"/dps_ahu.PNG\" alt=\"DPS AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n    The pump is using its’ Constant Temperature Control mode, which automatically adjusts the speed of the pump, and thereby the flow in the system, according to the load in the simulation and the setpoint defined via the Dashboard. It is possible to change the Controller parameters, Kp and Ti which are respectively the Proportional- and Integrator constants. This will affect the pumps response and serve to showcase and educate the impact of tuning the Controller in the pump\n</p>\n\n<h2 style=\"max-width:600px\">Pressure Independent Control Valve (PICV) Mode</h2>\n<p style=\"max-width:600px\">\n    In this mode, the flow is controlled via a PICV valve which lift-percentage is controlled by DCU which is using a PI-controller to maintain the SAT at the defined Setpoint.\n</p>\n<p style=\"max-width:600px\">\n<img src=\"/valve_ahu.PNG\" alt=\"Valve AHU\" style=\"width:100%;height:auto;\" >\n</p>\n<p style=\"max-width:600px\">\n   In this mode, the pump is serving as a pressure source, and operates in Constant Head Control mode. This is representative of ASHRAE’s recommendation of maintaining a constant differential pressure across the Index branch, as the pump head in this small closed-loop demo is equal to the differential pressure across the whole demo loop.<br>\n   It is possible to configure the travel speed of the PICV, but as default it is set to 24 sec/mm which is the factory default speed of this particular PICV.\n</p>\n\n</body>\n</html>\n",
         "output": "str",
         "x": 390,
         "y": 640,
@@ -13356,11 +13356,13 @@
         "wires": [
             [
                 "20dd88c6.1b6e48",
-                "4ec82e79.464a7"
+                "4ec82e79.464a7",
+                "b97232be.14639"
             ],
             [
                 "525f16bf.bd2c08",
-                "2052187a.6a0ba8"
+                "2052187a.6a0ba8",
+                "f982ea5c.f87808"
             ]
         ]
     },
@@ -13538,7 +13540,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html>\n\n<body style=\"background-color:blue\">\n<h1 style=\"max-width:600px\">\n    How to use this dashboard\n</h1>\n<p style=\"max-width:600px\">\n<img src=\"/help_simulation.png\" alt=\"intro\" style=\"width:100%;height:auto;\" >\n</p>\n\n<p style=\"max-width:600px\">\n  <ol style=\"max-width:600px\">\n      <li>Select either the pump or PICV mode</li>\n      <li>Occupancy can be changed on the fly, to change the load on the system</li>\n      <li>When ready, press start and the simulation will begin and you can follow the progress on the different plots</li>\n      <li>If you which to stop or restart the simulation, press the Reset</li>\n      <li>You can toggle the view of the Pump Status view by clicking this button</li>\n  </ol> \n</p>\n\n\n</body>\n</html>\n",
+        "template": "<!DOCTYPE html>\n<html>\n\n<body style=\"background-color:blue\">\n<h1 style=\"max-width:600px\">\n    How to use this dashboard\n</h1>\n<p style=\"max-width:600px\">\n<img src=\"/help_simulation.png\" alt=\"intro\" style=\"width:100%;height:auto;\" >\n</p>\n\n<p style=\"max-width:600px\">\n  <ol style=\"max-width:600px\">\n      <li>Select either the Pump or PICV mode</li>\n      <li>The settings in this menu can be changed either before the demo is started or on the fly, and the response of the demo is seen immidiately</li>\n      <li>When ready, press start and the simulation will begin and you can follow the progress on the different plots</li>\n      <li>If you which to stop or restart the simulation, press the Reset</li>\n      <li>You can toggle the view of the Pump Status, Flow-, Pressure and Return Water Temp chart to simplify the dashboard</li>\n      <li>It is possible to toggle between either the Duty Point- or the Flow Power chart and the data is consistent untill cleared</li>\n  </ol> \n</p>\n\n\n</body>\n</html>\n",
         "output": "str",
         "x": 360,
         "y": 580,
@@ -15243,6 +15245,83 @@
         "wires": [
             [
                 "f70d1c06.5de01"
+            ]
+        ]
+    },
+    {
+        "id": "b97232be.14639",
+        "type": "delay",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 810,
+        "y": 740,
+        "wires": [
+            [
+                "b7f63e33.2fc81"
+            ]
+        ]
+    },
+    {
+        "id": "f982ea5c.f87808",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 820,
+        "wires": [
+            [
+                "b97232be.14639"
+            ]
+        ]
+    },
+    {
+        "id": "b7f63e33.2fc81",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 680,
+        "wires": [
+            [
+                "dd510898.341cd8"
             ]
         ]
     }
