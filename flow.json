@@ -796,7 +796,7 @@
         "to": "",
         "reg": false,
         "x": 830,
-        "y": 460,
+        "y": 440,
         "wires": [
             [
                 "e82255e9.4b3548"
@@ -2628,7 +2628,7 @@
         "y": 420,
         "wires": [
             [
-                "fdca0392.e30f3"
+                "38371e9b.f27a92"
             ]
         ],
         "l": true
@@ -2641,8 +2641,8 @@
         "links": [
             "2a9f478a.e2a5c8"
         ],
-        "x": 320,
-        "y": 480,
+        "x": 300,
+        "y": 540,
         "wires": [
             [
                 "5de4da55.41ff24"
@@ -3845,7 +3845,8 @@
         "y": 3600,
         "wires": [
             [
-                "5583a882.7d57d8"
+                "5583a882.7d57d8",
+                "68de90b1.93e44"
             ]
         ]
     },
@@ -6640,20 +6641,6 @@
                 "45a1744.b8ef58c"
             ]
         ]
-    },
-    {
-        "id": "9b116a33.a4ee38",
-        "type": "debug",
-        "z": "2db3774.f99f488",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 2190,
-        "y": 3540,
-        "wires": []
     },
     {
         "id": "58a43c80.3be504",
@@ -13046,7 +13033,8 @@
             [
                 "dd510898.341cd8",
                 "525f16bf.bd2c08",
-                "2052187a.6a0ba8"
+                "2052187a.6a0ba8",
+                "f982ea5c.f87808"
             ]
         ]
     },
@@ -13074,7 +13062,8 @@
             [
                 "dd510898.341cd8",
                 "20dd88c6.1b6e48",
-                "4ec82e79.464a7"
+                "4ec82e79.464a7",
+                "b97232be.14639"
             ]
         ]
     },
@@ -15322,6 +15311,246 @@
         "wires": [
             [
                 "dd510898.341cd8"
+            ]
+        ]
+    },
+    {
+        "id": "68de90b1.93e44",
+        "type": "function",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "func": "var BK = context.get(\"BK\")\n\nif (msg.payload >40 && BK === false){\n    msg.payload = \"stop\"\n    context.set(\"BK\",true)\n}\nelse if (msg.payload <= 32 && BK === true){\n    msg.payload = \"go\"\n    context.set(\"BK\",false)\n}\n\nelse if (msg.payload > 32 && BK === true){\n    msg.payload = \"stop\"\n    \n}\nelse{\n    msg.payload = \"go\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"BK\",false)",
+        "finalize": "",
+        "libs": [],
+        "x": 1530,
+        "y": 3560,
+        "wires": [
+            [
+                "6b01e903.f201d8"
+            ]
+        ]
+    },
+    {
+        "id": "6b01e903.f201d8",
+        "type": "link out",
+        "z": "2db3774.f99f488",
+        "name": "liquid temp safety",
+        "links": [
+            "3c15ec6c.f7cab4"
+        ],
+        "x": 1800,
+        "y": 3560,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "38371e9b.f27a92",
+        "type": "traffic",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "property_allow": "payload",
+        "filter_allow": "go",
+        "ignore_case_allow": false,
+        "negate_allow": false,
+        "send_allow": false,
+        "property_stop": "payload",
+        "filter_stop": "stop",
+        "ignore_case_stop": false,
+        "negate_stop": false,
+        "send_stop": false,
+        "default_start": true,
+        "differ": false,
+        "x": 570,
+        "y": 420,
+        "wires": [
+            [
+                "fdca0392.e30f3"
+            ]
+        ]
+    },
+    {
+        "id": "3c15ec6c.f7cab4",
+        "type": "link in",
+        "z": "2db3774.f99f488",
+        "name": "liquid temp safety in",
+        "links": [
+            "6b01e903.f201d8"
+        ],
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "2e037ea1.3d6a02"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "b4acbadb.8dd448",
+        "type": "switch",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "stop",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 530,
+        "y": 500,
+        "wires": [
+            [
+                "32f42a17.b700f6",
+                "220bd1f8.14fb2e"
+            ]
+        ]
+    },
+    {
+        "id": "2e037ea1.3d6a02",
+        "type": "rbe",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "x": 330,
+        "y": 480,
+        "wires": [
+            [
+                "b4acbadb.8dd448",
+                "38371e9b.f27a92"
+            ]
+        ]
+    },
+    {
+        "id": "714eba67.e53804",
+        "type": "ui_toast",
+        "z": "2db3774.f99f488",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "topic": "",
+        "name": "",
+        "x": 1150,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "32f42a17.b700f6",
+        "type": "template",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n\n<body>\n<h1> We are running a bit hot!</h1>\n<p style=\"max-width:600px\">\n    We can see you have been enjoying this demo but unfourtuanly it needs to take a break and let the water cool down a bit, as it is now above 40 degrees celcius. \n    Due to the small scale of the demo and the water circulating in closed loop, it is natural for the water to be heat up. \n    This in no way affects the operation of the pump, which is rated to 110 degrees celcius, but as people might touch or come into contact with the unprotected piping, we want to ensure there is no risk to users from hot pipes. \n</p>\n\n<p style=\"max-width:600px\">\n    please give the demo some time to cool down and maybe grab a hot drink for yourself while waiting \n    \n</p>\n\n</body>\n</html>\n",
+        "output": "str",
+        "x": 920,
+        "y": 500,
+        "wires": [
+            [
+                "714eba67.e53804"
+            ]
+        ]
+    },
+    {
+        "id": "220bd1f8.14fb2e",
+        "type": "change",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 460,
+        "wires": [
+            [
+                "fdca0392.e30f3",
+                "434bf6f.08e9008"
+            ]
+        ]
+    },
+    {
+        "id": "caa8625c.d6fe6",
+        "type": "inject",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "41",
+        "payloadType": "num",
+        "x": 1280,
+        "y": 3520,
+        "wires": [
+            [
+                "68de90b1.93e44"
+            ]
+        ]
+    },
+    {
+        "id": "434bf6f.08e9008",
+        "type": "link out",
+        "z": "2db3774.f99f488",
+        "name": "temp safety stop",
+        "links": [
+            "4949c1fe.d6a9f"
+        ],
+        "x": 765,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4949c1fe.d6a9f",
+        "type": "link in",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "links": [
+            "434bf6f.08e9008"
+        ],
+        "x": 45,
+        "y": 940,
+        "wires": [
+            [
+                "26181a9.b3b52e6"
             ]
         ]
     }
