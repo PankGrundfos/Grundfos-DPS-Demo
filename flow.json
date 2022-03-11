@@ -5824,11 +5824,11 @@
         "id": "9e892c38.04976",
         "type": "widgetlords-analog-out",
         "z": "dff53b0e.d3f2c8",
-        "name": "A2 0-10V",
-        "channel": "2",
+        "name": "A1 0-10V",
+        "channel": "0",
         "address": "0",
-        "x": 660,
-        "y": 520,
+        "x": 760,
+        "y": 560,
         "wires": []
     },
     {
@@ -5918,8 +5918,7 @@
         "y": 620,
         "wires": [
             [
-                "9e892c38.04976",
-                "aa0c5e8.a0497a"
+                "9e892c38.04976"
             ]
         ]
     },
@@ -10053,9 +10052,7 @@
         "x": 660,
         "y": 980,
         "wires": [
-            [
-                "78b73203.c60a2c"
-            ]
+            []
         ]
     },
     {
@@ -11143,6 +11140,7 @@
         "id": "50c5117e.83fcc",
         "type": "switch",
         "z": "8e025641.d38868",
+        "d": true,
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -12394,7 +12392,8 @@
                 "57d4ea7b.d2fca4",
                 "2c4da08a.ea684",
                 "af282768.405fc8",
-                "af2c185c.74ac88"
+                "af2c185c.74ac88",
+                "197c159a.34cf6a"
             ]
         ]
     },
@@ -12416,7 +12415,7 @@
         "payload": "{\"group\":{\"show\":[\"Simulations_Valve_Position\"],\"hide\":[\"Simulations_Control_Simulation_Kp_Value\",\"Simulations_Control_Simulation_Ti_Value\"]}}",
         "payloadType": "json",
         "topic": "",
-        "x": 510,
+        "x": 490,
         "y": 420,
         "wires": [
             [
@@ -12424,7 +12423,8 @@
                 "eb9e8a59.aa31b8",
                 "b50b37e2.2074c8",
                 "a6ca9ced.d86eb",
-                "ff06f064.89e1b"
+                "ff06f064.89e1b",
+                "4bfb253.90b02dc"
             ]
         ]
     },
@@ -12701,7 +12701,7 @@
         "type": "debug",
         "z": "8e025641.d38868",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -15553,5 +15553,141 @@
                 "26181a9.b3b52e6"
             ]
         ]
+    },
+    {
+        "id": "1c4bcc9d.5a4323",
+        "type": "widgetlords-pi-spi-analog-in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "channel": "0",
+        "chipenable": "0",
+        "interval": "1000",
+        "x": 450,
+        "y": 1040,
+        "wires": [
+            [
+                "da48d50a.85b6b8"
+            ]
+        ]
+    },
+    {
+        "id": "5b185151.527c1",
+        "type": "debug",
+        "z": "8e025641.d38868",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "da48d50a.85b6b8",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "scaling",
+        "func": "var DP = (msg.payload/4000)*0.6*10\nmsg.payload=parseFloat(DP).toFixed(2);\nmsg.topic = \"DP Sensor\"\nflow.set(\"DP\",DP)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 1040,
+        "wires": [
+            [
+                "78b73203.c60a2c"
+            ]
+        ]
+    },
+    {
+        "id": "e1525c79.2102c",
+        "type": "widgetlords-analog-out",
+        "z": "8e025641.d38868",
+        "name": "A1 0-10V",
+        "channel": "0",
+        "address": "0",
+        "x": 1480,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "197c159a.34cf6a",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "0 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 380,
+        "wires": [
+            [
+                "e1525c79.2102c"
+            ]
+        ]
+    },
+    {
+        "id": "4bfb253.90b02dc",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "10 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "4000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 420,
+        "wires": [
+            [
+                "e1525c79.2102c"
+            ]
+        ]
+    },
+    {
+        "id": "8935379c.c33ec8",
+        "type": "comment",
+        "z": "8e025641.d38868",
+        "name": "older version",
+        "info": "Pop Up window for the older version of the demo with a manual 3-way valve",
+        "x": 600,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "fe14a74d.3efc48",
+        "type": "comment",
+        "z": "8e025641.d38868",
+        "name": "version",
+        "info": "New relay control via the AO module",
+        "x": 1290,
+        "y": 340,
+        "wires": []
     }
 ]
