@@ -1885,8 +1885,8 @@
         "label": "Opperation Hours",
         "format": "{{msg.payload.data[0]}}",
         "layout": "row-spread",
-        "x": 1230,
-        "y": 760,
+        "x": 1630,
+        "y": 720,
         "wires": []
     },
     {
@@ -1901,8 +1901,8 @@
         "label": "Powered Hours",
         "format": "{{msg.payload.data[0]}}",
         "layout": "row-spread",
-        "x": 1220,
-        "y": 820,
+        "x": 1620,
+        "y": 780,
         "wires": []
     },
     {
@@ -1917,8 +1917,8 @@
         "label": "# Start/Stop",
         "format": "{{msg.payload.data[0]}}",
         "layout": "row-spread",
-        "x": 1210,
-        "y": 880,
+        "x": 1610,
+        "y": 840,
         "wires": []
     },
     {
@@ -1933,8 +1933,8 @@
         "label": "# kWh",
         "format": "{{msg.payload.data[0]}}",
         "layout": "row-spread",
-        "x": 1190,
-        "y": 940,
+        "x": 1590,
+        "y": 900,
         "wires": []
     },
     {
@@ -2301,8 +2301,8 @@
             "4c319f9a.650f9",
             "c6e8cf65.2e104"
         ],
-        "x": 1055,
-        "y": 760,
+        "x": 1455,
+        "y": 720,
         "wires": [
             [
                 "e39b1a0e.2f9f78"
@@ -2319,8 +2319,8 @@
             "fe5446b2.1d3828",
             "f3e41dee.89e38"
         ],
-        "x": 1055,
-        "y": 820,
+        "x": 1455,
+        "y": 780,
         "wires": [
             [
                 "def44a3e.5f0488"
@@ -2337,8 +2337,8 @@
             "31298a84.03f4c6",
             "5c05d8d2.b61be8"
         ],
-        "x": 1055,
-        "y": 880,
+        "x": 1455,
+        "y": 840,
         "wires": [
             [
                 "51c90ad9.fabfc4"
@@ -2355,8 +2355,8 @@
             "2443457d.72f21a",
             "a090ac1f.41ecd"
         ],
-        "x": 1055,
-        "y": 940,
+        "x": 1455,
+        "y": 900,
         "wires": [
             [
                 "24838558.5880ea"
@@ -11140,7 +11140,6 @@
         "id": "50c5117e.83fcc",
         "type": "switch",
         "z": "8e025641.d38868",
-        "d": true,
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -12393,7 +12392,8 @@
                 "2c4da08a.ea684",
                 "af282768.405fc8",
                 "af2c185c.74ac88",
-                "197c159a.34cf6a"
+                "197c159a.34cf6a",
+                "4bfb253.90b02dc"
             ]
         ]
     },
@@ -12424,7 +12424,8 @@
                 "b50b37e2.2074c8",
                 "a6ca9ced.d86eb",
                 "ff06f064.89e1b",
-                "4bfb253.90b02dc"
+                "c750671e.9e8168",
+                "ce6f394f.f66248"
             ]
         ]
     },
@@ -12572,8 +12573,8 @@
         "links": [
             "4d495d24.918b94"
         ],
-        "x": 975,
-        "y": 420,
+        "x": 995,
+        "y": 460,
         "wires": []
     },
     {
@@ -13034,7 +13035,8 @@
                 "dd510898.341cd8",
                 "525f16bf.bd2c08",
                 "2052187a.6a0ba8",
-                "f982ea5c.f87808"
+                "f982ea5c.f87808",
+                "e8eb2180.e16c8"
             ]
         ]
     },
@@ -13248,8 +13250,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 860,
+        "x": 800,
+        "y": 820,
         "wires": [
             [
                 "f7062394.422cd"
@@ -15252,7 +15254,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 810,
+        "x": 790,
         "y": 740,
         "wires": [
             [
@@ -15279,8 +15281,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 820,
+        "x": 800,
+        "y": 780,
         "wires": [
             [
                 "b97232be.14639"
@@ -15609,11 +15611,11 @@
         "id": "e1525c79.2102c",
         "type": "widgetlords-analog-out",
         "z": "8e025641.d38868",
-        "name": "A1 0-10V",
+        "name": "A1 PICV",
         "channel": "0",
         "address": "0",
-        "x": 1480,
-        "y": 380,
+        "x": 2260,
+        "y": 300,
         "wires": []
     },
     {
@@ -15635,8 +15637,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1230,
-        "y": 380,
+        "x": 1830,
+        "y": 340,
         "wires": [
             [
                 "e1525c79.2102c"
@@ -15662,11 +15664,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1230,
-        "y": 420,
+        "x": 1830,
+        "y": 380,
         "wires": [
             [
-                "e1525c79.2102c"
+                "ae5e76ff.0910d8"
             ]
         ]
     },
@@ -15686,8 +15688,205 @@
         "z": "8e025641.d38868",
         "name": "version",
         "info": "New relay control via the AO module",
-        "x": 1290,
-        "y": 340,
+        "x": 2050,
+        "y": 240,
         "wires": []
+    },
+    {
+        "id": "4215631d.1d565c",
+        "type": "widgetlords-analog-out",
+        "z": "8e025641.d38868",
+        "name": "A4 MAGNA",
+        "channel": "3",
+        "address": "0",
+        "x": 2270,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c750671e.9e8168",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "0 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1830,
+        "y": 420,
+        "wires": [
+            [
+                "4215631d.1d565c"
+            ]
+        ]
+    },
+    {
+        "id": "ce6f394f.f66248",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "10 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "4000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1830,
+        "y": 460,
+        "wires": [
+            [
+                "a4d89736.c81f08"
+            ]
+        ]
+    },
+    {
+        "id": "a4d89736.c81f08",
+        "type": "delay",
+        "z": "8e025641.d38868",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 2070,
+        "y": 360,
+        "wires": [
+            [
+                "e1525c79.2102c"
+            ]
+        ]
+    },
+    {
+        "id": "ae5e76ff.0910d8",
+        "type": "delay",
+        "z": "8e025641.d38868",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 2060,
+        "y": 400,
+        "wires": [
+            [
+                "4215631d.1d565c"
+            ]
+        ]
+    },
+    {
+        "id": "65b53761.313d78",
+        "type": "widgetlords-analog-out",
+        "z": "ac69f322.1bb2c",
+        "name": "A1 PICV",
+        "channel": "0",
+        "address": "0",
+        "x": 1160,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "f45080bb.2f4b2",
+        "type": "widgetlords-analog-out",
+        "z": "ac69f322.1bb2c",
+        "name": "A4 MAGNA",
+        "channel": "3",
+        "address": "0",
+        "x": 1170,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "e8eb2180.e16c8",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 1040,
+        "wires": [
+            [
+                "65b53761.313d78",
+                "f45080bb.2f4b2"
+            ]
+        ]
+    },
+    {
+        "id": "d9571c6b.8ddd",
+        "type": "widgetlords-analog-out",
+        "z": "ac69f322.1bb2c",
+        "name": "A4 MAGNA",
+        "channel": "3",
+        "address": "0",
+        "x": 1190,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "29f4172.6c990e8",
+        "type": "inject",
+        "z": "ac69f322.1bb2c",
+        "name": "Initiate 10 V",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "4000",
+        "payloadType": "num",
+        "x": 1070,
+        "y": 720,
+        "wires": [
+            [
+                "d9571c6b.8ddd"
+            ]
+        ]
     }
 ]
