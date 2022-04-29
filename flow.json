@@ -11140,7 +11140,6 @@
         "id": "50c5117e.83fcc",
         "type": "switch",
         "z": "8e025641.d38868",
-        "d": true,
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -11220,7 +11219,9 @@
         "wires": [
             [
                 "c59565b2.e748e8",
-                "d1c8f753.6139f8"
+                "d1c8f753.6139f8",
+                "864a7a48.68adf8",
+                "2b98a1c5.a32d5e"
             ]
         ]
     },
@@ -13066,7 +13067,8 @@
                 "dd510898.341cd8",
                 "20dd88c6.1b6e48",
                 "4ec82e79.464a7",
-                "b97232be.14639"
+                "b97232be.14639",
+                "b4125f69.c3089"
             ]
         ]
     },
@@ -13349,12 +13351,14 @@
             [
                 "20dd88c6.1b6e48",
                 "4ec82e79.464a7",
-                "b97232be.14639"
+                "b97232be.14639",
+                "b4125f69.c3089"
             ],
             [
                 "525f16bf.bd2c08",
                 "2052187a.6a0ba8",
-                "f982ea5c.f87808"
+                "f982ea5c.f87808",
+                "e8eb2180.e16c8"
             ]
         ]
     },
@@ -13513,7 +13517,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "<p style=\"max-width:500px\">\n<img src=\"/../projects/Grundfos-DPS-Demo/valve.jpg\" alt=\"intro\" style=\"width:100%;height:auto;\">\n</p>",
+        "template": "<p style=\"max-width:500px\">\n<img src=\"/valve.jpg\" alt=\"valve\" style=\"width:100%;height:auto;\">\n</p>",
         "output": "str",
         "x": 770,
         "y": 2280,
@@ -14858,7 +14862,7 @@
         "links": [
             "1c54fde9.8ddaf2"
         ],
-        "x": 75,
+        "x": 115,
         "y": 120,
         "wires": [
             [
@@ -15256,10 +15260,11 @@
         "randomUnits": "seconds",
         "drop": false,
         "x": 790,
-        "y": 740,
+        "y": 720,
         "wires": [
             [
-                "b7f63e33.2fc81"
+                "b7f63e33.2fc81",
+                "e8eb2180.e16c8"
             ]
         ]
     },
@@ -15286,7 +15291,8 @@
         "y": 780,
         "wires": [
             [
-                "b97232be.14639"
+                "b97232be.14639",
+                "edd16f7f.ea4d6"
             ]
         ]
     },
@@ -15612,11 +15618,12 @@
         "id": "e1525c79.2102c",
         "type": "widgetlords-analog-out",
         "z": "8e025641.d38868",
+        "d": true,
         "name": "A1 PICV",
         "channel": "0",
         "address": "0",
-        "x": 2260,
-        "y": 300,
+        "x": 2280,
+        "y": 240,
         "wires": []
     },
     {
@@ -15669,7 +15676,8 @@
         "y": 380,
         "wires": [
             [
-                "ae5e76ff.0910d8"
+                "ae5e76ff.0910d8",
+                "3c0fe10c.73368e"
             ]
         ]
     },
@@ -15697,11 +15705,12 @@
         "id": "4215631d.1d565c",
         "type": "widgetlords-analog-out",
         "z": "8e025641.d38868",
+        "d": true,
         "name": "A4 MAGNA",
         "channel": "3",
         "address": "0",
-        "x": 2270,
-        "y": 440,
+        "x": 2290,
+        "y": 500,
         "wires": []
     },
     {
@@ -15754,7 +15763,8 @@
         "y": 460,
         "wires": [
             [
-                "a4d89736.c81f08"
+                "a4d89736.c81f08",
+                "3f71bde3.f9e112"
             ]
         ]
     },
@@ -15773,7 +15783,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 2070,
+        "x": 2060,
         "y": 360,
         "wires": [
             [
@@ -15861,8 +15871,8 @@
         "name": "A4 MAGNA",
         "channel": "3",
         "address": "0",
-        "x": 1190,
-        "y": 800,
+        "x": 1290,
+        "y": 700,
         "wires": []
     },
     {
@@ -15884,6 +15894,520 @@
         "payloadType": "num",
         "x": 1070,
         "y": 720,
+        "wires": [
+            [
+                "d9571c6b.8ddd",
+                "edd16f7f.ea4d6"
+            ]
+        ]
+    },
+    {
+        "id": "fd98ea5f.df8438",
+        "type": "exec",
+        "z": "8e025641.d38868",
+        "command": "cp /home/pi/.node-red/projects/Grundfos-DPS-Demo/pump.jpg /home/pi/.node-red/image",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "copy images",
+        "x": 2050,
+        "y": 120,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "eccd5bf3.188448",
+        "type": "inject",
+        "z": "8e025641.d38868",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1850,
+        "y": 120,
+        "wires": [
+            [
+                "fd98ea5f.df8438",
+                "f2e3a7c3.dc04f8"
+            ]
+        ]
+    },
+    {
+        "id": "f2e3a7c3.dc04f8",
+        "type": "exec",
+        "z": "8e025641.d38868",
+        "command": "cp /home/pi/.node-red/projects/Grundfos-DPS-Demo/valve.jpg /home/pi/.node-red/image",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "copy images",
+        "x": 2050,
+        "y": 180,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "864a7a48.68adf8",
+        "type": "exec",
+        "z": "651c65ba.af2eec",
+        "command": "cp /home/pi/.node-red/projects/Grundfos-DPS-Demo/pump.jpg /home/pi/.node-red/image",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "copy images",
+        "x": 190,
+        "y": 1740,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "605e4658.db93e8",
+        "type": "exec",
+        "z": "651c65ba.af2eec",
+        "command": "cp /home/pi/.node-red/projects/Grundfos-DPS-Demo/valve.jpg /home/pi/.node-red/image",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "copy images",
+        "x": 210,
+        "y": 1780,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2b98a1c5.a32d5e",
+        "type": "delay",
+        "z": "651c65ba.af2eec",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 60,
+        "y": 1780,
+        "wires": [
+            [
+                "605e4658.db93e8"
+            ]
+        ]
+    },
+    {
+        "id": "3c0fe10c.73368e",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "path_picker",
+                "pt": "global",
+                "to": "pump",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2420,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f71bde3.f9e112",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "path_picker",
+                "pt": "global",
+                "to": "valve",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2420,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3107ffd4.e2875",
+        "type": "inject",
+        "z": "8e025641.d38868",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2280,
+        "y": 320,
+        "wires": [
+            [
+                "3c0fe10c.73368e"
+            ]
+        ]
+    },
+    {
+        "id": "def89cc0.fec0f",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "0 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1390,
+        "y": 1020,
+        "wires": [
+            [
+                "298c104c.425d6"
+            ]
+        ]
+    },
+    {
+        "id": "ca31bb38.1bca58",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "10 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "4000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1390,
+        "y": 1060,
+        "wires": [
+            [
+                "2925c208.5dd8de"
+            ]
+        ]
+    },
+    {
+        "id": "3202104e.6479c",
+        "type": "widgetlords-analog-out",
+        "z": "ac69f322.1bb2c",
+        "name": "A4 MAGNA",
+        "channel": "3",
+        "address": "0",
+        "x": 1850,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "5bc1cd48.887284",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "0 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1390,
+        "y": 1100,
+        "wires": [
+            [
+                "3202104e.6479c"
+            ]
+        ]
+    },
+    {
+        "id": "ffa88cd.62c7d7",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "10 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "4000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1390,
+        "y": 1140,
+        "wires": [
+            [
+                "251c20e3.2982c"
+            ]
+        ]
+    },
+    {
+        "id": "251c20e3.2982c",
+        "type": "delay",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1620,
+        "y": 1040,
+        "wires": [
+            [
+                "298c104c.425d6"
+            ]
+        ]
+    },
+    {
+        "id": "2925c208.5dd8de",
+        "type": "delay",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1620,
+        "y": 1080,
+        "wires": [
+            [
+                "3202104e.6479c"
+            ]
+        ]
+    },
+    {
+        "id": "298c104c.425d6",
+        "type": "widgetlords-analog-out",
+        "z": "ac69f322.1bb2c",
+        "name": "A1 PICV",
+        "channel": "0",
+        "address": "0",
+        "x": 1840,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "b4125f69.c3089",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "path_picker",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 880,
+        "wires": [
+            [
+                "ea60bde7.0f9f4",
+                "5871d252.11228c"
+            ]
+        ]
+    },
+    {
+        "id": "ea60bde7.0f9f4",
+        "type": "switch",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "pump",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "valve",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 880,
+        "wires": [
+            [
+                "def89cc0.fec0f",
+                "ca31bb38.1bca58"
+            ],
+            [
+                "ffa88cd.62c7d7",
+                "5bc1cd48.887284"
+            ]
+        ]
+    },
+    {
+        "id": "5871d252.11228c",
+        "type": "debug",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "edd16f7f.ea4d6",
+        "type": "delay",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1050,
+        "y": 800,
+        "wires": [
+            [
+                "22d8bdd5.1d7362"
+            ]
+        ]
+    },
+    {
+        "id": "22d8bdd5.1d7362",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "0 V",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 800,
         "wires": [
             [
                 "d9571c6b.8ddd"
