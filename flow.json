@@ -1217,7 +1217,8 @@
                 "f9b47b7a.8ce028",
                 "ba7905db.dd2498",
                 "37a240a8.2a56b",
-                "d3b7e040.f2fb3"
+                "d3b7e040.f2fb3",
+                "f258421f.74655"
             ]
         ]
     },
@@ -4894,6 +4895,7 @@
         "id": "58632b83.e1d234",
         "type": "link out",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Min Max Speed Noti",
         "links": [
             "eef25f1c.86c85"
@@ -6995,7 +6997,7 @@
         "order": 7,
         "width": 0,
         "height": 0,
-        "passthru": false,
+        "passthru": true,
         "label": "Clear Data",
         "tooltip": "",
         "color": "",
@@ -8445,7 +8447,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "rational fit",
-        "func": "var q = global.get(\"Flow\");\nvar q_max = 4.6\n\nvar p1 = 8594\nvar p2 = 4.258\nvar q1 = 6451\nvar q2 = 2322\nvar Q = 52000\n//var Q = 31500\nvar x = q/q_max\n\nf = (p1*x+p2)/(x^2+q1*x+q2)\nmsg.payload = f*Q\n\nreturn msg;",
+        "func": "var q = global.get(\"Flow\");\nvar q_max = 4\n\nvar p1 = 8594\nvar p2 = 4.258\nvar q1 = 6451\nvar q2 = 2322\nvar Q = 52000\n//var Q = 31500\nvar x = q/q_max\n\nf = (p1*x+p2)/(x^2+q1*x+q2)\nmsg.payload = f*Q\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -8506,7 +8508,7 @@
         "tooltip": "",
         "place": "Valve Speed",
         "group": "8dd78c30.ffe35",
-        "order": 2,
+        "order": 3,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -8650,7 +8652,7 @@
         "tooltip": "",
         "place": "Valve Mode",
         "group": "8dd78c30.ffe35",
-        "order": 3,
+        "order": 4,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -8959,7 +8961,7 @@
         "label": "Valve Opening",
         "tooltip": "",
         "group": "8dd78c30.ffe35",
-        "order": 4,
+        "order": 5,
         "width": "0",
         "height": "0",
         "wrap": false,
@@ -10309,7 +10311,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "5",
+                "to": "4.2",
                 "tot": "num"
             }
         ],
@@ -11096,20 +11098,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "f4fde460.a07658",
-        "type": "debug",
-        "z": "8e025641.d38868",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1700,
-        "y": 2600,
-        "wires": []
     },
     {
         "id": "e0337605.c6a948",
@@ -12455,7 +12443,8 @@
             [
                 "37a240a8.2a56b",
                 "1a41372d.070429",
-                "6e7b67e.169bf98"
+                "6e7b67e.169bf98",
+                "f258421f.74655"
             ]
         ]
     },
@@ -12704,7 +12693,7 @@
         "type": "debug",
         "z": "8e025641.d38868",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -13813,7 +13802,7 @@
         "label": "P Value",
         "tooltip": "",
         "group": "8dd78c30.ffe35",
-        "order": 5,
+        "order": 6,
         "width": 0,
         "height": 0,
         "wrap": false,
@@ -13839,7 +13828,7 @@
         "label": "I Value",
         "tooltip": "",
         "group": "8dd78c30.ffe35",
-        "order": 6,
+        "order": 7,
         "width": 0,
         "height": 0,
         "wrap": false,
@@ -14177,12 +14166,12 @@
         "links": [
             "1bae50b.64892af"
         ],
-        "x": 2295,
-        "y": 620,
+        "x": 2135,
+        "y": 580,
         "wires": [
             [
                 "56065ced.3ff764",
-                "f4b1d9e1.66e3f8"
+                "5d8c7e5e.f57fe"
             ]
         ]
     },
@@ -14605,7 +14594,9 @@
         "x": 3600,
         "y": 940,
         "wires": [
-            []
+            [
+                "f4b1d9e1.66e3f8"
+            ]
         ]
     },
     {
@@ -15240,7 +15231,8 @@
         "y": 3120,
         "wires": [
             [
-                "f70d1c06.5de01"
+                "f70d1c06.5de01",
+                "3f5703fa.5ab35c"
             ]
         ]
     },
@@ -15580,22 +15572,6 @@
         ]
     },
     {
-        "id": "5b185151.527c1",
-        "type": "debug",
-        "z": "8e025641.d38868",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1140,
-        "y": 980,
-        "wires": []
-    },
-    {
         "id": "da48d50a.85b6b8",
         "type": "function",
         "z": "8e025641.d38868",
@@ -15818,8 +15794,8 @@
         "id": "65b53761.313d78",
         "type": "widgetlords-analog-out",
         "z": "ac69f322.1bb2c",
-        "name": "A1 PICV",
-        "channel": "0",
+        "name": "A4 PICV",
+        "channel": "3",
         "address": "0",
         "x": 1160,
         "y": 1000,
@@ -15829,8 +15805,8 @@
         "id": "f45080bb.2f4b2",
         "type": "widgetlords-analog-out",
         "z": "ac69f322.1bb2c",
-        "name": "A4 MAGNA",
-        "channel": "3",
+        "name": "A1 MAGNA",
+        "channel": "0",
         "address": "0",
         "x": 1170,
         "y": 1080,
@@ -15868,11 +15844,11 @@
         "id": "d9571c6b.8ddd",
         "type": "widgetlords-analog-out",
         "z": "ac69f322.1bb2c",
-        "name": "A4 MAGNA",
-        "channel": "3",
+        "name": "A1 MAGNA",
+        "channel": "0",
         "address": "0",
-        "x": 1290,
-        "y": 700,
+        "x": 1330,
+        "y": 720,
         "wires": []
     },
     {
@@ -16167,8 +16143,8 @@
         "id": "3202104e.6479c",
         "type": "widgetlords-analog-out",
         "z": "ac69f322.1bb2c",
-        "name": "A4 MAGNA",
-        "channel": "3",
+        "name": "A1 MAGNA",
+        "channel": "0",
         "address": "0",
         "x": 1850,
         "y": 1180,
@@ -16278,8 +16254,8 @@
         "id": "298c104c.425d6",
         "type": "widgetlords-analog-out",
         "z": "ac69f322.1bb2c",
-        "name": "A1 PICV",
-        "channel": "0",
+        "name": "A4 PICV",
+        "channel": "3",
         "address": "0",
         "x": 1840,
         "y": 920,
@@ -16308,8 +16284,7 @@
         "y": 880,
         "wires": [
             [
-                "ea60bde7.0f9f4",
-                "5871d252.11228c"
+                "ea60bde7.0f9f4"
             ]
         ]
     },
@@ -16347,22 +16322,6 @@
                 "5bc1cd48.887284"
             ]
         ]
-    },
-    {
-        "id": "5871d252.11228c",
-        "type": "debug",
-        "z": "ac69f322.1bb2c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1240,
-        "y": 840,
-        "wires": []
     },
     {
         "id": "edd16f7f.ea4d6",
@@ -16411,6 +16370,158 @@
         "wires": [
             [
                 "d9571c6b.8ddd"
+            ]
+        ]
+    },
+    {
+        "id": "9b3c949c.b6c208",
+        "type": "ui_ui_control",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "events": "all",
+        "x": 840,
+        "y": 420,
+        "wires": [
+            [
+                "deaa4c34.e170f"
+            ]
+        ]
+    },
+    {
+        "id": "7d3b0b78.507444",
+        "type": "ui_button",
+        "z": "b066e7c5.874fa8",
+        "name": "",
+        "group": "8dd78c30.ffe35",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Clear Data",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "",
+        "x": 470,
+        "y": 40,
+        "wires": [
+            [
+                "2de45bfe.c1ca54"
+            ]
+        ]
+    },
+    {
+        "id": "2de45bfe.c1ca54",
+        "type": "link out",
+        "z": "b066e7c5.874fa8",
+        "name": "valve_overview_clear",
+        "links": [
+            "746ea72e.ce6648"
+        ],
+        "x": 997.0000133514404,
+        "y": 43,
+        "wires": []
+    },
+    {
+        "id": "746ea72e.ce6648",
+        "type": "link in",
+        "z": "b066e7c5.874fa8",
+        "name": "",
+        "links": [
+            "2de45bfe.c1ca54"
+        ],
+        "x": 675,
+        "y": 880,
+        "wires": [
+            [
+                "228ecbfe.dae294",
+                "45abcdfc.ff1114",
+                "f1111494.9793a8",
+                "99dbd0ad.c5423",
+                "e0b81866.6ea5d8",
+                "18c1fc13.b92e14",
+                "a516a52d.5e3d48"
+            ]
+        ]
+    },
+    {
+        "id": "5d8c7e5e.f57fe",
+        "type": "traffic",
+        "z": "8e025641.d38868",
+        "name": "",
+        "property_allow": "payload",
+        "filter_allow": "start",
+        "ignore_case_allow": true,
+        "negate_allow": false,
+        "send_allow": false,
+        "property_stop": "payload",
+        "filter_stop": "stop",
+        "ignore_case_stop": true,
+        "negate_stop": false,
+        "send_stop": false,
+        "default_start": false,
+        "differ": false,
+        "x": 2290,
+        "y": 560,
+        "wires": [
+            [
+                "f4b1d9e1.66e3f8"
+            ]
+        ]
+    },
+    {
+        "id": "f258421f.74655",
+        "type": "link out",
+        "z": "8e025641.d38868",
+        "name": "duty_point_traffic",
+        "links": [
+            "2de39f3f.62351"
+        ],
+        "x": 545,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "2de39f3f.62351",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "f258421f.74655"
+        ],
+        "x": 2125,
+        "y": 660,
+        "wires": [
+            [
+                "5d8c7e5e.f57fe"
+            ]
+        ]
+    },
+    {
+        "id": "d035aecb.fcbb4",
+        "type": "inject",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "4.4",
+        "payloadType": "num",
+        "x": 140,
+        "y": 1340,
+        "wires": [
+            [
+                "a8617fa1.61aa6"
             ]
         ]
     }
