@@ -6995,7 +6995,7 @@
         "type": "ui_numeric",
         "z": "ac69f322.1bb2c",
         "name": "Setpoint",
-        "label": "setpoint",
+        "label": "Setpoint",
         "tooltip": "",
         "group": "ab3a9e02.8ace9",
         "order": 8,
