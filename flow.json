@@ -201,7 +201,7 @@
         "type": "ui_group",
         "name": "Controls",
         "tab": "2a42b678.b2f55a",
-        "order": 1,
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -211,7 +211,7 @@
         "type": "ui_group",
         "name": "Configuration",
         "tab": "2a42b678.b2f55a",
-        "order": 2,
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -221,7 +221,7 @@
         "type": "ui_group",
         "name": "Head and Flow",
         "tab": "2a42b678.b2f55a",
-        "order": 3,
+        "order": 4,
         "disp": false,
         "width": "6",
         "collapse": false
@@ -231,7 +231,7 @@
         "type": "ui_group",
         "name": "Status",
         "tab": "2a42b678.b2f55a",
-        "order": 5,
+        "order": 6,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -241,7 +241,7 @@
         "type": "ui_group",
         "name": "Info",
         "tab": "2a42b678.b2f55a",
-        "order": 6,
+        "order": 7,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -459,7 +459,7 @@
         "type": "ui_group",
         "name": "Duty Point",
         "tab": "2a42b678.b2f55a",
-        "order": 4,
+        "order": 5,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -508,7 +508,7 @@
         "type": "ui_group",
         "name": "Gauges",
         "tab": "2a42b678.b2f55a",
-        "order": 7,
+        "order": 8,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -560,6 +560,16 @@
         "tab": "ea9b6de0.2693d",
         "order": 7,
         "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6d89e3d4.7e4fac",
+        "type": "ui_group",
+        "name": "Unit Selection",
+        "tab": "2a42b678.b2f55a",
+        "order": 1,
+        "disp": false,
         "width": "6",
         "collapse": false
     },
@@ -738,7 +748,7 @@
         "type": "function",
         "z": "2db3774.f99f488",
         "name": "calc set point display",
-        "func": "var set_point = msg.payload/10000;\nvar select = global.get(\"control_mode\");\nvar display = 0;\n\n//Constant Speed / Curve\nif (select === 0){\n    var sensor_min = global.get(\"min_freq\")\n    display = parseFloat((set_point*100).toFixed(1));\n    if (display < sensor_min){\n        display = sensor_min\n    } \n    msg.payload = display+\" %\"\n}\n\n//Constant freq / curve\nif (select === 1){\n    var sensor_min = global.get(\"min_freq\")\n    display = parseFloat((set_point*100).toFixed(1));\n    if (display < sensor_min){\n        display = sensor_min\n    } \n    msg.payload = display+\" %\"\n}\n\n\n// Constant Head\nelse if (select == 3){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n\n    msg.payload = display+\" m\"\n    \n}\n\n// Constant Pressure\nelse if (select == 4){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    \n    msg.payload = display+\" m\"\n    \n}\n\n// Const. Diff. Press.\nelse if (select == 5){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n\n    msg.payload = display+\" m\"\n}\n\n// Prop. Pres\nelse if (select == 6){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n\n    msg.payload = display+\" m\"\n    \n}\n\n// Constant Flow\nelse if (select == 7){\n    var min = global.get(\"min_flow\")\n    var max = global.get(\"max_flow\")\n    var unit = global.get(\"unit\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    if (unit == 14){ //6 should in theory be right but MAGNA3 shows 14\n    msg.payload = display+\" m<sup>3</sup>/h\"\n    }\n    else if (unit == 7){\n    msg.payload = display+\" m<sup>3</sup>/s\"    \n    }\n    else if (unit == 8){\n    msg.payload = display+\" L/s\"    \n    }\n    else if (unit == 9){\n    msg.payload = display+\" GPM\"    \n    }\n    else {\n    msg.payload = display\n    }\n}\n\n// Constant Temp\nelse if (select == 8){\n    var min = global.get(\"min_temp\")\n    var max = global.get(\"max_temp\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max\n    var r_min = min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    msg.payload = display+\" &deg C\"\n    \n}\n\n// Constant Diff Temp\nelse if (select == 9){\n    var min = global.get(\"min_temp\")\n    var max = global.get(\"max_temp\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max\n    var r_min = min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    msg.payload = display+\" &deg C\"\n    \n}\n\n// Constant Pressure\nelse if (select == 10){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    \n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    \n    msg.payload = display+\" m\"\n    \n}\n\nelse {\n    msg.payload = 0\n}\n\nglobal.set(\"set_point\",display)\nreturn msg;",
+        "func": "var set_point = msg.payload/10000;\nvar select = global.get(\"control_mode\");\nvar display = 0;\n\n//Constant Speed / Curve\nif (select === 0){\n    var sensor_min = global.get(\"min_freq\")\n    display = parseFloat((set_point*100).toFixed(1));\n    if (display < sensor_min){\n        display = sensor_min\n    } \n    msg.payload = display\n    msg.unit = \"%\"\n}\n\n//Constant freq / curve\nif (select === 1){\n    var sensor_min = global.get(\"min_freq\")\n    display = parseFloat((set_point*100).toFixed(1));\n    if (display < sensor_min){\n        display = sensor_min\n    } \n    msg.payload = display\n    msg.unit = \"%\"\n}\n\n\n// Constant Head\nelse if (select == 3){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"m\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = min*3.28\n        max = max*3.28\n        msg.unit = \"ft\"\n    }\n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n\n    msg.payload = display\n    \n}\n\n// Constant Pressure\nelse if (select == 4){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"m\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = min*3.28\n        max = max*3.28\n        msg.unit = \"ft\"\n    }\n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    \n    msg.payload = display\n    \n}\n\n// Const. Diff. Press.\nelse if (select == 5){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"m\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = min*3.28\n        max = max*3.28\n        msg.unit = \"ft\"\n    }\n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n\n    msg.payload = display\n}\n\n// Prop. Pres\nelse if (select == 6){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"m\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = min*3.28\n        max = max*3.28\n        msg.unit = \"ft\"\n    }\n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n\n    msg.payload = display\n    \n}\n\n// Constant Flow\nelse if (select == 7){\n    var min = global.get(\"min_flow\")\n    var max = global.get(\"max_flow\")\n    var unit = global.get(\"unit\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"m<sup>3</sup>/h\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = min*4.403\n        max = max*4.403\n        msg.unit = \"GPM\"\n    }\n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    //if (unit == 14){ //6 should in theory be right but MAGNA3 shows 14\n    msg.payload = display\n    //}\n    \n}\n\n// Constant Temp\nelse if (select == 8){\n    var min = global.get(\"min_temp\")\n    var max = global.get(\"max_temp\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"&deg C\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = (min*9/5)+32\n        max = (max*9/5)+32\n        msg.unit = \"&deg F\"\n    }\n    var r_max = max\n    var r_min = min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    msg.payload = display\n    \n}\n\n// Constant Diff Temp\nelse if (select == 9){\n    var min = global.get(\"min_temp\")\n    var max = global.get(\"max_temp\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"&deg C\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = (min*9/5)+32\n        max = (max*9/5)+32\n        msg.unit = \"&deg F\"\n    }\n    var r_max = max\n    var r_min = min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    msg.payload = display\n    \n}\n\n// Constant Pressure\nelse if (select == 10){\n    var min = global.get(\"min_head\")\n    var max = global.get(\"max_head\")\n    var sensor_min = global.get(\"sensor_min\")\n    var sensor_max = global.get(\"sensor_max\")\n    msg.unit = \"m\"\n    if (global.get(\"global_units\") == \"imperial\"){\n        min = min*3.28\n        max = max*3.28\n        msg.unit = \"ft\"\n    }\n    var r_max = max*sensor_max\n    var r_min = max*sensor_min\n    \n    tmp = set_point*(r_max-r_min)+r_min\n    display =  parseFloat((tmp).toFixed(1));\n    if (display < r_min){\n        display = r_min\n    }\n    \n    msg.payload = display\n    \n}\n\nelse {\n    msg.payload = 0\n}\n\nglobal.set(\"set_point\",display)\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1063,8 +1073,7 @@
         "y": 2120,
         "wires": [
             [
-                "9634441f.02a058",
-                "6563a96e.3c5808"
+                "f06b850b.fcf068"
             ]
         ]
     },
@@ -1120,10 +1129,9 @@
             [
                 "687b1b48.367654",
                 "76d45005.bef82",
-                "2cfc9e27.5879f2",
-                "2e13de3b.fdcb62",
                 "26bc4a80.a02816",
-                "e0337605.c6a948"
+                "e0337605.c6a948",
+                "3469c799.7cf688"
             ]
         ]
     },
@@ -1156,10 +1164,10 @@
         "height": "0",
         "name": "Supply Air Temp",
         "label": "",
-        "format": "{{msg.payload}} &deg C",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-spread",
-        "x": 1780,
-        "y": 1340,
+        "x": 2060,
+        "y": 1440,
         "wires": []
     },
     {
@@ -1172,9 +1180,9 @@
         "height": "0",
         "name": "Return Water Temp",
         "label": "RWT",
-        "format": "{{msg.payload}} &deg C",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-spread",
-        "x": 1790,
+        "x": 1970,
         "y": 1220,
         "wires": []
     },
@@ -1204,7 +1212,7 @@
         "order": 17,
         "width": 0,
         "height": 0,
-        "passthru": false,
+        "passthru": true,
         "label": "Reset",
         "tooltip": "",
         "color": "",
@@ -1566,8 +1574,8 @@
         "topic": "",
         "payload": "100",
         "payloadType": "num",
-        "x": 570,
-        "y": 1480,
+        "x": 310,
+        "y": 1460,
         "wires": [
             [
                 "4e2b3ef9.c5ab7",
@@ -1663,7 +1671,7 @@
         "z": "2db3774.f99f488",
         "group": "806379db.c33df8",
         "name": "Header Logo (and clock)",
-        "order": 8,
+        "order": 10,
         "width": 0,
         "height": 0,
         "format": "<script id=\"clockScript1\" type=\"text/javascript\">\n    var clockInterval;\n    $(function () {\n        if (clockInterval) return;\n\n        //add logo\n        var div1 = $('<div/>');\n        var logo = new Image();\n\n        logo.src = '/logo_old.png'\n        logo.height = 45;\n        div1[0].style.margin = '5px';\n\n        div1.append(logo);\n\n        //add clock\n        var div2 = $('<div/>');\n        var p = $('<p/>');\n\n        div2.append(p);\n        div2[0].style.margin = '10px auto';\n        \n        var div3 = $('<div/>');\n        div3[0].style.margin = '10px auto';\n        function displayTime() {\n            p.text(new Date().toLocaleString());\n        }\n        \n        clockInterval = setInterval(displayTime, 1000);\n\n        //add to toolbar when it's available\n        var addToToolbarTimer;\n        \n        function addToToolbar() {\n            var toolbar = $('.md-toolbar-tools');\n            \n            if(!toolbar.length) return;\n            \n            toolbar.append(div3);\n            toolbar.append(div1);\n            clearInterval(addToToolbarTimer);\n        }\n        addToToolbarTimer = setInterval(addToToolbar, 100);\n    });\n</script>",
@@ -1694,7 +1702,7 @@
         "nodata": "",
         "dot": false,
         "ymin": "0",
-        "ymax": "20",
+        "ymax": "8",
         "removeOlder": "2",
         "removeOlderPoints": "",
         "removeOlderUnit": "60",
@@ -1797,7 +1805,7 @@
         "height": "1",
         "name": "Flow Meter",
         "label": "Flow M:",
-        "format": "{{msg.payload}} m<sup>3</sup>/h",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-spread",
         "x": 1190,
         "y": 20,
@@ -1813,7 +1821,7 @@
         "height": "1",
         "name": "Flow Pump",
         "label": "Flow P:",
-        "format": "{{msg.payload}} m<sup>3</sup>/h",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-spread",
         "x": 1190,
         "y": 80,
@@ -2530,7 +2538,7 @@
         "height": "1",
         "name": "Set Point Display",
         "label": "",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-left",
         "x": 670,
         "y": 1620,
@@ -2788,7 +2796,7 @@
         "label": "Start Stop",
         "tooltip": "",
         "group": "806379db.c33df8",
-        "order": 4,
+        "order": 6,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -2838,7 +2846,8 @@
         "y": 1120,
         "wires": [
             [
-                "2a9f478a.e2a5c8"
+                "2a9f478a.e2a5c8",
+                "fb3fa258.d5efb"
             ]
         ]
     },
@@ -2851,7 +2860,7 @@
         "label": "BMS Control",
         "tooltip": "",
         "group": "806379db.c33df8",
-        "order": 3,
+        "order": 5,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -2906,7 +2915,7 @@
         "z": "ac69f322.1bb2c",
         "name": "",
         "group": "806379db.c33df8",
-        "order": 9,
+        "order": 11,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -2932,7 +2941,7 @@
         "z": "ac69f322.1bb2c",
         "name": "",
         "group": "806379db.c33df8",
-        "order": 10,
+        "order": 12,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -3020,7 +3029,7 @@
         "links": [
             "45c127f0.038e68"
         ],
-        "x": 675,
+        "x": 835,
         "y": 1360,
         "wires": []
     },
@@ -3252,7 +3261,7 @@
         "height": "0",
         "name": "Flow Value",
         "label": "Flow",
-        "format": "{{msg.payload}} m<sup>3</sup>/h",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-spread",
         "x": 1330,
         "y": 820,
@@ -3310,7 +3319,7 @@
         "height": "1",
         "name": "Head Value",
         "label": "Pressure ",
-        "format": "{{msg.payload}} m",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-spread",
         "x": 1330,
         "y": 920,
@@ -3508,13 +3517,16 @@
         "func": "msg.payload = parseFloat((msg.payload.data / 10).toFixed(1));\nmsg.topic = \"MAGNA3\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 860,
         "y": 2660,
         "wires": [
             [
                 "604b09c8.44fc08",
                 "33583f04.53b82",
-                "8c809dae.e3377"
+                "ebb73de0.c3e1f"
             ]
         ]
     },
@@ -3531,7 +3543,7 @@
         "wires": [
             [
                 "58930c30.7570d4",
-                "4cf4b66c.14e348"
+                "d141d81.6e08028"
             ]
         ]
     },
@@ -3739,6 +3751,9 @@
         "func": "if (msg.payload == 1){\n    msg.payload = \"Yes\"\n}\nelse {\n    msg.payload = \"No\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 1740,
         "y": 2080,
         "wires": [
@@ -3858,8 +3873,8 @@
         "y": 3600,
         "wires": [
             [
-                "5583a882.7d57d8",
-                "68de90b1.93e44"
+                "68de90b1.93e44",
+                "b120c50c.fc8d58"
             ]
         ]
     },
@@ -4898,7 +4913,7 @@
         "links": [
             "98c7076e.9889e8"
         ],
-        "x": 2200,
+        "x": 2360,
         "y": 3660,
         "wires": [],
         "l": true
@@ -6476,6 +6491,9 @@
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 337\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 910,
         "y": 3720,
         "wires": [
@@ -6577,11 +6595,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1740,
+        "x": 1900,
         "y": 3720,
         "wires": [
             [
-                "cc7dd57b.ad8308"
+                "53a99d.f8818664"
             ]
         ]
     },
@@ -6589,6 +6607,7 @@
         "id": "3f0e943b.4117cc",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote press 2 341",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 341\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6632,6 +6651,7 @@
         "id": "fc7f217b.04416",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6659,6 +6679,7 @@
         "id": "58a43c80.3be504",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote press 1 316",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 316\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6675,6 +6696,7 @@
         "id": "7e66ab7c.28d344",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6702,6 +6724,7 @@
         "id": "dffe97f2.982878",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote temp1 320",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 320\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6718,6 +6741,7 @@
         "id": "1cf3ad7b.ba8e63",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6745,6 +6769,7 @@
         "id": "f7cebe69.8ffc",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote flow 314",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 314\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6761,6 +6786,7 @@
         "id": "6386b912.143888",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6788,6 +6814,7 @@
         "id": "4144b1aa.d8b52",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote diff temp 346",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 346\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6804,6 +6831,7 @@
         "id": "3caf5e3d.9de082",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6831,6 +6859,7 @@
         "id": "24475ab4.34d056",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote diff press 349",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 349\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6847,6 +6876,7 @@
         "id": "8c885329.342f6",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6874,6 +6904,7 @@
         "id": "95e5707a.be75d",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "Remote tank 350",
         "func": "// The purpose of this block is to make it use to extract information \n// from the modbus read output block which covers everything from\n// Address 301 to 362 with respect to the MODbus functional profile\n\n\n// Firstly, define the MODbus address you are interested in as stated\n// in the functional profile\n// example if you want to read the pump head on address 301\n// then modbus_add = 301 \nvar Modbus_add = 350\n\n// Some addresses are a 32bit, which is indicated by the functional \n// profile, as having a HI and LO part on seperate addresses\n// Example is Opperation time, which is on address 327 and 328\n// if you want to read one of these 32bit addresses, change the \n// Double_add from \"false\" to \"true\". The address should be the first\n// of the double, so from previous example, Modbus_add = 327\n\nvar Double_add = false\n\n// the code below will now extract and format the data point you have \n// selected. you will not need to change anything below\n\nvar index = Modbus_add - 301\nvar msg1 ={'payload' : {'data' : [],'buffer': []}}\n\nif (Double_add === true){\n\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]//\nindex = index+1\nmsg1.payload.data[1] = msg.payload.data[index]//PowerLO\nmsg1.payload.buffer[2] = msg.payload.buffer[index*2]//\nmsg1.payload.buffer[3] = msg.payload.buffer[index*2+1]//\n\n// Create new Buffer based on array bytes\nconst buf = Buffer.from(msg1.payload.buffer);\n\n// Represent these bytes as 32-bit unsigned int\nconst value = buf.readUInt32BE();\n\n// save the value\nmsg1.payload.data[0] = value;    \n}\nelse {\nmsg1.payload.data[0] = msg.payload.data[index]\nmsg1.payload.buffer[0] = msg.payload.buffer[index*2]\nmsg1.payload.buffer[1] = msg.payload.buffer[index*2+1]\n}\nreturn msg1;",
         "outputs": 1,
@@ -6890,6 +6921,7 @@
         "id": "eeb487ef.c49bc8",
         "type": "change",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -6918,7 +6950,7 @@
         "type": "function",
         "z": "ac69f322.1bb2c",
         "name": "scale",
-        "func": "msg.payload = (msg.payload)*100\nreturn msg;",
+        "func": "var unit = global.get(\"global_units\")\nif (unit == \"imperial\"){\n    msg.payload = msg.payload/4.403;\n}\n\nmsg.payload = (msg.payload)*100\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6946,7 +6978,7 @@
         "wrap": false,
         "passthru": true,
         "topic": "",
-        "format": "{{value}} m<sup>3</sup>/h",
+        "format": "{{value}} {{msg.unit}}",
         "min": "0",
         "max": "16",
         "step": "0.2",
@@ -7006,7 +7038,7 @@
         "z": "ac69f322.1bb2c",
         "name": "",
         "group": "806379db.c33df8",
-        "order": 7,
+        "order": 9,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -7045,6 +7077,7 @@
         "id": "30190fa9.28da7",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7082,6 +7115,9 @@
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)-273).toFixed(1));\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 1560,
         "y": 3720,
         "wires": [
@@ -7094,6 +7130,7 @@
         "id": "7aa7180c.081fd8",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)-273).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7110,6 +7147,7 @@
         "id": "9559774b.7aa738",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7143,6 +7181,7 @@
         "id": "e8e212e3.ceeb9",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7159,6 +7198,7 @@
         "id": "cc9a0744.dc7ab8",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7192,6 +7232,7 @@
         "id": "ee11c6c9.fc59b8",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7208,6 +7249,7 @@
         "id": "1cabc0e2.570abf",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7241,6 +7283,7 @@
         "id": "ff7600c3.bd526",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7257,6 +7300,7 @@
         "id": "d722326a.27e5",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7290,6 +7334,7 @@
         "id": "327daa35.209b56",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7306,6 +7351,7 @@
         "id": "5595eb7.c18fc14",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7339,6 +7385,7 @@
         "id": "f26c5536.f2b3d8",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7355,6 +7402,7 @@
         "id": "3201978b.37cdb8",
         "type": "switch",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "property": "payload.data",
         "propertyType": "msg",
@@ -7388,6 +7436,7 @@
         "id": "f83b8670.b40e58",
         "type": "function",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "rounding",
         "func": "\n\nmsg.payload = parseFloat(((msg.payload.data / 100)).toFixed(1));\nreturn msg;",
         "outputs": 1,
@@ -7422,6 +7471,7 @@
         "id": "ae8366b9.cf0748",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -7440,6 +7490,7 @@
         "id": "45a1744.b8ef58c",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -7458,6 +7509,7 @@
         "id": "8eb4e249.4cd8d",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -7476,6 +7528,7 @@
         "id": "42bcd991.6216b8",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -7494,6 +7547,7 @@
         "id": "4f161753.55b818",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -7512,6 +7566,7 @@
         "id": "54584380.199dec",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -7530,6 +7585,7 @@
         "id": "1d16ea0d.945036",
         "type": "rbe",
         "z": "2db3774.f99f488",
+        "d": true,
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -9344,7 +9400,7 @@
         "height": "1",
         "name": "Flow Value",
         "label": "Flow:",
-        "format": "{{msg.payload}} m<sup>3</sup>/h",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-left",
         "x": 1010,
         "y": 1020,
@@ -9360,7 +9416,7 @@
         "height": "1",
         "name": "Head Value",
         "label": "Head:",
-        "format": "{{msg.payload}} m",
+        "format": "{{msg.payload}} {{msg.unit}}",
         "layout": "row-left",
         "x": 1010,
         "y": 1140,
@@ -9557,7 +9613,7 @@
             "#c5b0d5"
         ],
         "outputs": 1,
-        "x": 1820,
+        "x": 2000,
         "y": 1160,
         "wires": [
             []
@@ -9599,8 +9655,8 @@
             "#c5b0d5"
         ],
         "outputs": 1,
-        "x": 1800,
-        "y": 1300,
+        "x": 2080,
+        "y": 1400,
         "wires": [
             []
         ]
@@ -9628,12 +9684,12 @@
         "y": 1680,
         "wires": [
             [
-                "6563a96e.3c5808",
                 "2e13de3b.fdcb62",
                 "78b73203.c60a2c",
                 "a184cc5.85b0a3",
                 "d2640b62.73e8f8",
-                "254ba8e6.24b308"
+                "254ba8e6.24b308",
+                "6563a96e.3c5808"
             ]
         ]
     },
@@ -9872,7 +9928,7 @@
         "wrap": false,
         "passthru": true,
         "topic": "",
-        "format": "{{value}} &deg C",
+        "format": "{{value}} {{msg.unit}}",
         "min": "12",
         "max": "16",
         "step": 1,
@@ -9880,8 +9936,7 @@
         "y": 2640,
         "wires": [
             [
-                "e264a0c6.9b016",
-                "230a850c.380b0a"
+                "1e6d1859.4be348"
             ]
         ]
     },
@@ -9893,6 +9948,9 @@
         "func": "var min = global.get(\"min_temp\")\nvar max = global.get(\"max_temp\")\nvar sensor_min = global.get(\"sensor_min\")\nvar sensor_max = global.get(\"sensor_max\")\n    \nvar r_max = max\nvar r_min = min\nvar tmp = msg.payload\nsetpoint = ((tmp-r_min)/(r_max-r_min))*10000\nmsg.payload = setpoint\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 960,
         "y": 2820,
         "wires": [
@@ -10276,8 +10334,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1110,
-        "y": 3280,
+        "x": 1070,
+        "y": 3200,
         "wires": [
             [
                 "3e8337c3.c37638",
@@ -10289,7 +10347,7 @@
         "id": "173f953b.a5731b",
         "type": "change",
         "z": "8e025641.d38868",
-        "name": "BMS, GO, FlowLimit",
+        "name": "BMS, GO",
         "rules": [
             {
                 "t": "set",
@@ -10304,14 +10362,14 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1140,
-        "y": 3340,
+        "x": 1040,
+        "y": 3240,
         "wires": [
             [
                 "32c3acf8.337714",
                 "f70d1c06.5de01",
                 "3f5703fa.5ab35c",
-                "dfbe5265.b9b7"
+                "c48832d8.c9d37"
             ]
         ]
     },
@@ -10339,7 +10397,7 @@
         "wires": [
             [
                 "23a897ff.ee9898",
-                "798fcc00.8c5ca4"
+                "d3f1e406.e7a648"
             ]
         ]
     },
@@ -10390,7 +10448,8 @@
         "wires": [
             [
                 "cc39cac7.c24b38",
-                "f3e6af03.fb1e2"
+                "f3e6af03.fb1e2",
+                "ede26a1a.d336f8"
             ]
         ]
     },
@@ -10468,11 +10527,11 @@
         "links": [
             "23a897ff.ee9898"
         ],
-        "x": 215,
-        "y": 1260,
+        "x": 55,
+        "y": 1240,
         "wires": [
             [
-                "a8617fa1.61aa6"
+                "38f1c67d.be5d3a"
             ]
         ]
     },
@@ -10530,8 +10589,8 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 3190,
-        "y": 840,
+        "x": 3210,
+        "y": 860,
         "wires": [
             []
         ]
@@ -10855,11 +10914,14 @@
         "func": "\nvar lg = msg.payload.data.length\nvar flow\nif (lg > 1){\n\nconst buf = Buffer.from(msg.payload.buffer);\nconst value = buf.readFloatBE();\nflow = value*0.001; //m3/h\n}\nmsg.payload = parseFloat(flow.toFixed(1));\nmsg.topic = \"Flow Meter\"\nglobal.set(\"Flow\",flow)\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 860,
         "y": 240,
         "wires": [
             [
-                "1bae50b.64892af"
+                "db3d148d.6791b8"
             ]
         ]
     },
@@ -10874,7 +10936,7 @@
             "a3c7b322.2011b",
             "85d4fca1.c8769"
         ],
-        "x": 1040,
+        "x": 1395,
         "y": 240,
         "wires": []
     },
@@ -11035,14 +11097,17 @@
         "type": "function",
         "z": "ac69f322.1bb2c",
         "name": "Format Data",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n    y = y*3.28;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1430,
-        "y": 140,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 80,
         "wires": [
             [
-                "3069aa49.688026"
+                "8eb6dc0b.3dbe9"
             ]
         ]
     },
@@ -11057,8 +11122,8 @@
         "syntax": "mustache",
         "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 10,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Head [m]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 5,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [m\\u00B3/h]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
         "output": "str",
-        "x": 1500,
-        "y": 200,
+        "x": 1540,
+        "y": 140,
         "wires": [
             [
                 "e05b0eb1.db3c5"
@@ -11822,8 +11887,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1130,
-        "y": 3220,
+        "x": 1090,
+        "y": 3160,
         "wires": [
             [
                 "b0e1b816.4a68b8",
@@ -12055,7 +12120,7 @@
         "y": 3060,
         "wires": [
             [
-                "e864dbd8.9e4c58"
+                "6104ae6c.6c24b"
             ]
         ]
     },
@@ -12783,7 +12848,7 @@
         "z": "ac69f322.1bb2c",
         "name": "",
         "group": "806379db.c33df8",
-        "order": 11,
+        "order": 13,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -12893,7 +12958,7 @@
         "z": "ac69f322.1bb2c",
         "name": "",
         "group": "806379db.c33df8",
-        "order": 12,
+        "order": 14,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -12965,7 +13030,7 @@
         "z": "ac69f322.1bb2c",
         "name": "BMS",
         "group": "806379db.c33df8",
-        "order": 2,
+        "order": 4,
         "width": "3",
         "height": "1",
         "passthru": false,
@@ -12993,7 +13058,7 @@
         "z": "ac69f322.1bb2c",
         "name": "Local",
         "group": "806379db.c33df8",
-        "order": 1,
+        "order": 3,
         "width": "3",
         "height": "1",
         "passthru": false,
@@ -13021,7 +13086,7 @@
         "z": "ac69f322.1bb2c",
         "name": "Stop Pump",
         "group": "806379db.c33df8",
-        "order": 5,
+        "order": 7,
         "width": "3",
         "height": "1",
         "passthru": false,
@@ -13051,7 +13116,7 @@
         "z": "ac69f322.1bb2c",
         "name": "Start Pump",
         "group": "806379db.c33df8",
-        "order": 6,
+        "order": 8,
         "width": "3",
         "height": "1",
         "passthru": false,
@@ -14296,7 +14361,7 @@
         "y": 680,
         "wires": [
             [
-                "5365a9a8.3482d8"
+                "91e123a.4c21fe"
             ]
         ]
     },
@@ -14305,7 +14370,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Format Data - DPS",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data1')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n    y = y*3.28;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data1\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -14324,7 +14389,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Format Data - Constant",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data2')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data2\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data2')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n    y = y*3.28;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data2\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -14343,7 +14408,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Format Data - prop",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data3')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data3\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data3')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('head')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n    y = y*3.28;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data3\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -14369,8 +14434,8 @@
         "syntax": "mustache",
         "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 9,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Head [m]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 5,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [m\\u00B3/h]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
         "output": "str",
-        "x": 3020,
-        "y": 760,
+        "x": 3460,
+        "y": 640,
         "wires": [
             [
                 "26825313.33462c"
@@ -14431,7 +14496,7 @@
         "y": 1140,
         "wires": [
             [
-                "ecb7747c.1a13b8"
+                "95429697.540c28"
             ]
         ]
     },
@@ -14440,7 +14505,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Format Data - DPS",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data4')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data4\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data4')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data4\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -14459,7 +14524,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Format Data - Constant",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data5')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data5\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data5')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data5\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -14478,7 +14543,7 @@
         "type": "function",
         "z": "8e025641.d38868",
         "name": "Format Data - prop",
-        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data6')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\n\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data6\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
+        "func": "// this is where you define the legend for \n// the datasets\nvar title = \"Pump Duty Point\";\nvar legend1 = \"legend1\";\n\n// variables to be used to \nvar i, x, y, data1\ndata1 = flow.get('data6')||'';\n\nvar count = flow.get('count')||0;\ncount += 1;\nif (count > 998) {\n    count = 1;\n    data1 = '{x: 0,  y: 0},'; // Force the size of the\n} \n// store the value back\nflow.set('count',count);\n// make it part of the outgoing msg object\nmsg.count = count;\n\n// for dataset #1\n// this code generates one x/y point \n// between -100 and +100 and a random \n//size between 1 and 10\n//node.warn(\"db1=\"+data1);\nx = global.get('Flow')||0;\ny = global.get('W')||0;\nif (global.get(\"global_units\")==\"imperial\"){\n    x = x*4.403;\n}\ndata1 += \"{x: \"+x+\", y: \"+y+\"},\";\n//node.warn(\"db2=\"+data1);\n// this line removes the last comma to end the dataset\ndata1 = data1.replace(/^(.*),(.*?)$/, '$1')\n\n// Now we build msg.payload\nmsg.payload = { \"title\"   : title,\n                \"legend1\" : legend1,\n                \"data1\"   : data1,\n                };\ndata1 += \",\";\n\n//flow.set([\"data1\", \"data2\"], [data1, data2]);\nflow.set([\"data6\"], [data1]);\n\nreturn msg;\n\n// this code gets a random interger\nfunction getRndInteger(min, max) {\n    return Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -14504,8 +14569,8 @@
         "syntax": "mustache",
         "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 200,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Power [W]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 5,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [m\\u00B3/h]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
         "output": "str",
-        "x": 3040,
-        "y": 1220,
+        "x": 3400,
+        "y": 1180,
         "wires": [
             [
                 "6687a70e.1e7af8"
@@ -14552,7 +14617,7 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 3210,
+        "x": 3410,
         "y": 1280,
         "wires": [
             []
@@ -14671,7 +14736,8 @@
         "z": "8e025641.d38868",
         "name": "To UI Control",
         "links": [
-            "bff86c0a.f7e11"
+            "bff86c0a.f7e11",
+            "1d5571d7.5d127e"
         ],
         "x": 3580,
         "y": 1020,
@@ -14788,15 +14854,15 @@
         "wrap": false,
         "passthru": true,
         "topic": "",
-        "format": "{{value}} &deg C",
+        "format": "{{value}} {{msg.unit}}",
         "min": "13",
         "max": "28",
         "step": 1,
-        "x": 760,
-        "y": 1600,
+        "x": 560,
+        "y": 1680,
         "wires": [
             [
-                "3b290629.b5f58a"
+                "6e7f2c31.94aeb4"
             ]
         ]
     },
@@ -14826,7 +14892,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 940,
+        "x": 920,
         "y": 1600,
         "wires": [
             []
@@ -14851,11 +14917,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
+        "x": 160,
         "y": 1600,
         "wires": [
             [
-                "3f19d1a1.f1514e"
+                "52b4db38.22afd4"
             ]
         ]
     },
@@ -15600,7 +15666,7 @@
         "y": 1040,
         "wires": [
             [
-                "78b73203.c60a2c"
+                "24d38ec.484dc72"
             ]
         ]
     },
@@ -16536,6 +16602,915 @@
         "wires": [
             [
                 "a8617fa1.61aa6"
+            ]
+        ]
+    },
+    {
+        "id": "a02c9aa4.fdf2a8",
+        "type": "ui_button",
+        "z": "ac69f322.1bb2c",
+        "name": "Metric",
+        "group": "806379db.c33df8",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Metric",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "metric",
+        "payloadType": "str",
+        "topic": "",
+        "x": 470,
+        "y": 2060,
+        "wires": [
+            [
+                "38860b0a.8ae7b4",
+                "4d523715.7af1d8",
+                "4f574b53.84c364",
+                "2da66d69.63a4f2"
+            ]
+        ]
+    },
+    {
+        "id": "1c4b7980.c28f97",
+        "type": "ui_button",
+        "z": "ac69f322.1bb2c",
+        "name": "imperial",
+        "group": "806379db.c33df8",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Imperial ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "imperial",
+        "payloadType": "str",
+        "topic": "",
+        "x": 500,
+        "y": 2140,
+        "wires": [
+            [
+                "ffb07db6.fa8ad",
+                "fdcb9a9e.554718",
+                "4f574b53.84c364",
+                "2da66d69.63a4f2"
+            ]
+        ]
+    },
+    {
+        "id": "38860b0a.8ae7b4",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#11497B",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 1980,
+        "wires": [
+            [
+                "a02c9aa4.fdf2a8"
+            ]
+        ]
+    },
+    {
+        "id": "ffb07db6.fa8ad",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#11497B",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 2200,
+        "wires": [
+            [
+                "1c4b7980.c28f97"
+            ]
+        ]
+    },
+    {
+        "id": "4d523715.7af1d8",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#707372",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 2040,
+        "wires": [
+            [
+                "1c4b7980.c28f97"
+            ]
+        ]
+    },
+    {
+        "id": "fdcb9a9e.554718",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#707372",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 2160,
+        "wires": [
+            [
+                "a02c9aa4.fdf2a8"
+            ]
+        ]
+    },
+    {
+        "id": "4f574b53.84c364",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "global_units",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 2100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "512880a.23f818",
+        "type": "inject",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 2040,
+        "wires": [
+            [
+                "560a56bd.a31da8",
+                "38860b0a.8ae7b4",
+                "4d523715.7af1d8",
+                "2da66d69.63a4f2"
+            ]
+        ]
+    },
+    {
+        "id": "ebb73de0.c3e1f",
+        "type": "function",
+        "z": "2db3774.f99f488",
+        "name": "unit conversion - flow",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat((msg.payload*4.403).toFixed(1));\n    msg.unit = \"GPM\";\n    msg.ui_control = {\"ymax\" : 25};\n    return msg;\n}\nelse{\n    msg.unit = \"m<sup>3</sup>/h\";\n    msg.ui_control = {\"ymax\" : 8};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1360,
+        "y": 2620,
+        "wires": [
+            [
+                "8c809dae.e3377",
+                "39f2250d.e5d54a"
+            ]
+        ]
+    },
+    {
+        "id": "560a56bd.a31da8",
+        "type": "change",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "global_units",
+                "pt": "global",
+                "to": "metric",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 160,
+        "y": 1980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39f2250d.e5d54a",
+        "type": "debug",
+        "z": "2db3774.f99f488",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1660,
+        "y": 2680,
+        "wires": []
+    },
+    {
+        "id": "d141d81.6e08028",
+        "type": "function",
+        "z": "2db3774.f99f488",
+        "name": "unit conversion - head",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat((msg.payload*3.28).toFixed(1));\n    msg.unit = \"ft\";\n    msg.ui_control = {\"ymax\" : 42};\n    return msg;\n}\nelse{\n    msg.unit = \"m\";\n    msg.ui_control = {\"ymax\" : 12};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 2780,
+        "wires": [
+            [
+                "4cf4b66c.14e348"
+            ]
+        ]
+    },
+    {
+        "id": "db3d148d.6791b8",
+        "type": "function",
+        "z": "a006c3c.49c7b4",
+        "name": "unit conversion - flow",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat((msg.payload*4.403).toFixed(1));\n    msg.unit = \"GPM\";\n    msg.ui_control = {\"ymax\" : 25};\n    return msg;\n}\nelse{\n    msg.unit = \"m<sup>3</sup>/h\";\n    msg.ui_control = {\"ymax\" : 8};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 240,
+        "wires": [
+            [
+                "1bae50b.64892af"
+            ]
+        ]
+    },
+    {
+        "id": "53a99d.f8818664",
+        "type": "function",
+        "z": "2db3774.f99f488",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload*9/5)+32).toFixed(1));\n    //msg.unit = \"ft\";\n    msg.ui_control = {\"min\" : 32, \"max\" : 140};\n    return msg;\n}\nelse{\n    //msg.unit = \"m\";\n    msg.ui_control = {\"min\" : 0, \"max\" : 60};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2120,
+        "y": 3700,
+        "wires": [
+            [
+                "cc7dd57b.ad8308"
+            ]
+        ]
+    },
+    {
+        "id": "b120c50c.fc8d58",
+        "type": "function",
+        "z": "2db3774.f99f488",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload*9/5)+32).toFixed(1));\n    //msg.unit = \"ft\";\n    msg.ui_control = {\"min\" : 14, \"max\" : 226};\n    return msg;\n}\nelse{\n    //msg.unit = \"m\";\n    msg.ui_control = {\"min\" : -10, \"max\" : 130};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 3600,
+        "wires": [
+            [
+                "5583a882.7d57d8"
+            ]
+        ]
+    },
+    {
+        "id": "24d38ec.484dc72",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - head",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat((msg.payload*3.28).toFixed(1));\n    msg.unit = \"ft\";\n    msg.ui_control = {\"ymax\" : 42};\n    return msg;\n}\nelse{\n    msg.unit = \"m\";\n    msg.ui_control = {\"ymax\" : 12};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 1000,
+        "wires": [
+            [
+                "78b73203.c60a2c"
+            ]
+        ]
+    },
+    {
+        "id": "38f1c67d.be5d3a",
+        "type": "function",
+        "z": "ac69f322.1bb2c",
+        "name": "unit conversion - flow",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat((msg.payload*4.403).toFixed(1));\n    msg.unit = \"GPM\";\n    msg.ui_control = {\"max\" : 70.4};\n    return msg;\n}\nelse{\n    msg.unit = \"m<sup>3</sup>/h\";\n    msg.ui_control = {\"max\" : 16};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 1260,
+        "wires": [
+            [
+                "a8617fa1.61aa6"
+            ]
+        ]
+    },
+    {
+        "id": "2da66d69.63a4f2",
+        "type": "link out",
+        "z": "ac69f322.1bb2c",
+        "name": "unit_conversion",
+        "links": [
+            "67412911.7e2648",
+            "34686bc3.54c374",
+            "17d9566c.e01b0a"
+        ],
+        "x": 1005,
+        "y": 2060,
+        "wires": []
+    },
+    {
+        "id": "67412911.7e2648",
+        "type": "link in",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "links": [
+            "2da66d69.63a4f2"
+        ],
+        "x": 15,
+        "y": 1400,
+        "wires": [
+            [
+                "68907545.9193ec"
+            ]
+        ]
+    },
+    {
+        "id": "68907545.9193ec",
+        "type": "function",
+        "z": "ac69f322.1bb2c",
+        "name": "unit conversion - flow",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\n\nif (unit == \"imperial\"){\n    msg.unit = \"GPM\";\n    msg.ui_control = {\"max\" : 70.4};\n    msg.payload = parseFloat((4.2*4.403).toFixed(1));\n    return msg;\n}\nelse{\n    msg.payload = 4.2;\n    msg.unit = \"m<sup>3</sup>/h\";\n    msg.ui_control = {\"max\" : 16};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 1400,
+        "wires": [
+            [
+                "a8617fa1.61aa6"
+            ]
+        ]
+    },
+    {
+        "id": "f06b850b.fcf068",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload*9/5)+32).toFixed(1));\n    msg.unit = \"&deg F\";\n    msg.ui_control = {\"ymin\" : 50, \"ymax\" : 86};\n    return msg;\n}\nelse{\n    msg.unit = \"&deg C\";\n    msg.ui_control = {\"ymin\" : 10, \"ymax\" : 30};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1740,
+        "y": 1380,
+        "wires": [
+            [
+                "6563a96e.3c5808",
+                "9634441f.02a058"
+            ]
+        ]
+    },
+    {
+        "id": "3469c799.7cf688",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload*9/5)+31).toFixed(1));\n    msg.unit = \"&deg F\";\n    msg.ui_control = {\"ymin\" : 50, \"ymax\" : 83};\n    return msg;\n}\nelse{\n    msg.unit = \"&deg C\";\n    msg.ui_control = {\"ymin\" : 10, \"ymax\" : 28};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1860,
+        "y": 1500,
+        "wires": [
+            [
+                "2e13de3b.fdcb62",
+                "2cfc9e27.5879f2"
+            ]
+        ]
+    },
+    {
+        "id": "52b4db38.22afd4",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload*9/5)+32).toFixed(1));\n    msg.unit = \"&deg F\";\n    msg.ui_control = {\"min\" : 55, \"max\" : 83};\n    return msg;\n}\nelse{\n    msg.unit = \"&deg C\";\n    msg.ui_control = {\"min\" : 13, \"max\" : 28};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1600,
+        "wires": [
+            [
+                "3f19d1a1.f1514e"
+            ]
+        ]
+    },
+    {
+        "id": "34686bc3.54c374",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "2da66d69.63a4f2"
+        ],
+        "x": 15,
+        "y": 1660,
+        "wires": [
+            [
+                "2905e85b.417598",
+                "3b8b86bb.c5568a"
+            ]
+        ]
+    },
+    {
+        "id": "6104ae6c.6c24b",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload*9/5)+32).toFixed(1));\n    msg.unit = \"&deg F\";\n    msg.ui_control = {\"min\" : 53, \"max\" : 61};\n    return msg;\n}\nelse{\n    msg.unit = \"&deg C\";\n    msg.ui_control = {\"min\" : 12, \"max\" : 16};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 2780,
+        "wires": [
+            [
+                "e864dbd8.9e4c58"
+            ]
+        ]
+    },
+    {
+        "id": "17d9566c.e01b0a",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "2da66d69.63a4f2"
+        ],
+        "x": 35,
+        "y": 3020,
+        "wires": [
+            [
+                "5454a46d.7196ac"
+            ]
+        ]
+    },
+    {
+        "id": "5454a46d.7196ac",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "13",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 2960,
+        "wires": [
+            [
+                "6104ae6c.6c24b"
+            ]
+        ]
+    },
+    {
+        "id": "6e7f2c31.94aeb4",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload-32)*5/9).toFixed(1));\n    //msg.unit = \"&deg F\";\n    //msg.ui_control = {\"min\" : 55, \"max\" : 83};\n    return msg;\n}\nelse{\n    //msg.unit = \"&deg C\";\n    //msg.ui_control = {\"min\" : 13, \"max\" : 28};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 1600,
+        "wires": [
+            [
+                "3b290629.b5f58a"
+            ]
+        ]
+    },
+    {
+        "id": "1e6d1859.4be348",
+        "type": "function",
+        "z": "8e025641.d38868",
+        "name": "unit conversion - temp",
+        "func": "var unit = global.get(\"global_units\")\nmsg.select_unit = unit\nif (unit == \"imperial\"){\n    msg.payload = parseFloat(((msg.payload-32)*5/9).toFixed(1));\n    //msg.unit = \"&deg F\";\n    //msg.ui_control = {\"min\" : 55, \"max\" : 83};\n    return msg;\n}\nelse{\n    //msg.unit = \"&deg C\";\n    //msg.ui_control = {\"min\" : 13, \"max\" : 28};\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 2680,
+        "wires": [
+            [
+                "e264a0c6.9b016",
+                "230a850c.380b0a"
+            ]
+        ]
+    },
+    {
+        "id": "d3f1e406.e7a648",
+        "type": "delay",
+        "z": "8e025641.d38868",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 950,
+        "y": 3440,
+        "wires": [
+            [
+                "798fcc00.8c5ca4"
+            ]
+        ]
+    },
+    {
+        "id": "c48832d8.c9d37",
+        "type": "delay",
+        "z": "8e025641.d38868",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1190,
+        "y": 3360,
+        "wires": [
+            [
+                "dfbe5265.b9b7"
+            ]
+        ]
+    },
+    {
+        "id": "91e123a.4c21fe",
+        "type": "switch",
+        "z": "8e025641.d38868",
+        "name": "",
+        "property": "global_units",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "metric",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "imperial",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 3230,
+        "y": 680,
+        "wires": [
+            [
+                "5365a9a8.3482d8"
+            ],
+            [
+                "3d3484d4.82fb5c"
+            ]
+        ]
+    },
+    {
+        "id": "3d3484d4.82fb5c",
+        "type": "template",
+        "z": "8e025641.d38868",
+        "name": "Format HTML - imperial",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 30,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Head [ft]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 20,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [GPM]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
+        "output": "str",
+        "x": 3450,
+        "y": 700,
+        "wires": [
+            [
+                "26825313.33462c"
+            ]
+        ]
+    },
+    {
+        "id": "95429697.540c28",
+        "type": "switch",
+        "z": "8e025641.d38868",
+        "name": "",
+        "property": "global_units",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "metric",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "imperial",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 3210,
+        "y": 1200,
+        "wires": [
+            [
+                "ecb7747c.1a13b8"
+            ],
+            [
+                "375d4ca6.f35044"
+            ]
+        ]
+    },
+    {
+        "id": "fdd43597.f25c58",
+        "type": "template",
+        "z": "ac69f322.1bb2c",
+        "name": "Format HTML - imperial",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 30,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Head [ft]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 25,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [GPM]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
+        "output": "str",
+        "x": 1550,
+        "y": 200,
+        "wires": [
+            [
+                "e05b0eb1.db3c5"
+            ]
+        ]
+    },
+    {
+        "id": "8eb6dc0b.3dbe9",
+        "type": "switch",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "property": "global_units",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "metric",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "imperial",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1370,
+        "y": 160,
+        "wires": [
+            [
+                "3069aa49.688026"
+            ],
+            [
+                "fdd43597.f25c58"
+            ]
+        ]
+    },
+    {
+        "id": "375d4ca6.f35044",
+        "type": "template",
+        "z": "8e025641.d38868",
+        "name": "Format HTML - imperial",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<canvas id=\"bubble-chart\" width=\"90%\" height=\"90%\" margin=\"auto\"></canvas>\n\n<script>\nnew Chart(document.getElementById(\"bubble-chart\"), {\n    type: 'scatter',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"{{{payload.legend1}}}\",\n          backgroundColor: \"rgba(65, 72, 255, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data1}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend2}}}\",\n          backgroundColor: \"rgba(137, 0, 39, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data2}}}\n\n          ]\n        },\n        {\n          label: \"{{{payload.legend3}}}\",\n          backgroundColor: \"rgba(244, 149, 0, 1.0000)\",\n          borderColor: \"#000\",\n          fill: false,\n          showLine: false,\n          data: [\n            {{{payload.data3}}}\n\n          ]\n        }\n      ]\n    },\n    options: {\n        animation: false,\n        legend: {\n            display: false,\n            labels: {\n                fontColor: 'rgb(255, 255, 255)'\n            }\n        },\n    title: {\n        display: false,\n        text: '{{{payload.title}}}',\n        fontColor: 'rgb(255, 255, 255)'\n      },\n      scales: {\n        yAxes: [{\n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 200,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Power [W]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          },\n         \n        }],\n        xAxes: [{ \n          ticks: {\n            beginAtZero:true,\n            fontColor: 'rgb(255, 255, 255,0.5)',\n            suggestedMax: 20,\n          },\n          gridLines: {\n            display: true,\n            drawBorder: true,\n            color: 'rgb(255, 255, 255,0.1)',\n        },\n          scaleLabel: {\n            display: true,\n            labelString: \"Flow [GPM]\",\n            fontColor: 'rgb(255, 255, 255)',\n            \n          }\n        }]\n      }\n    }\n});\n\n</script>\n",
+        "output": "str",
+        "x": 3410,
+        "y": 1220,
+        "wires": [
+            [
+                "6687a70e.1e7af8"
+            ]
+        ]
+    },
+    {
+        "id": "fb3fa258.d5efb",
+        "type": "debug",
+        "z": "ac69f322.1bb2c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "ede26a1a.d336f8",
+        "type": "delay",
+        "z": "8e025641.d38868",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1150,
+        "y": 3580,
+        "wires": [
+            [
+                "3e38a29c.67c8ae"
+            ]
+        ]
+    },
+    {
+        "id": "3e38a29c.67c8ae",
+        "type": "change",
+        "z": "8e025641.d38868",
+        "name": "FlowLimit",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1140,
+        "y": 3620,
+        "wires": [
+            [
+                "3f5703fa.5ab35c"
+            ]
+        ]
+    },
+    {
+        "id": "1d5571d7.5d127e",
+        "type": "link in",
+        "z": "8e025641.d38868",
+        "name": "",
+        "links": [
+            "ccc1fe2.f1b4d"
+        ],
+        "x": 2335,
+        "y": 680,
+        "wires": [
+            [
+                "f4b1d9e1.66e3f8"
             ]
         ]
     }
